@@ -78,7 +78,8 @@ src="https://www.facebook.com/tr?id=859705945030457&ev=PageView&noscript=1"
   --danger: #ef4444;
   --border: #e2e8e5;
 }
-body { background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+html { overflow-x: hidden; }
+body { background: var(--bg); color: var(--text); line-height: 1.6; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { font-family: inherit; cursor: pointer; border: none; }
@@ -101,18 +102,15 @@ header {
 .logo-img { height: 56px; width: auto; }
 .logo-text h1 { font-size: 20px; color: var(--primary-dark); font-weight: 700; line-height: 1.1; }
 .logo-text p { font-size: 11px; color: var(--accent-dark); font-weight: 700; letter-spacing: 2px; }
-nav ul { display: flex; gap: 8px; list-style: none; }
-nav a { padding: 8px 14px; border-radius: 8px; font-size: 14px; font-weight: 600; transition: all 0.3s; }
-nav a:hover { background: #eef5f3; color: var(--primary); transform: scale(1.05); }
 .cart-btn {
   background: var(--primary); color: #fff; padding: 12px 24px;
   border-radius: 10px; font-weight: 700; font-size: 15px;
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 8px; white-space: nowrap;
   transition: all 0.3s; position: relative;
   box-shadow: 0 6px 16px rgba(10,92,79,0.25), 0 0 0 2px rgba(212,168,75,0.35);
 }
 .cart-btn:hover { background: var(--primary-dark); transform: translateY(-3px) scale(1.03); box-shadow: 0 10px 24px rgba(10,92,79,0.35), 0 0 0 3px rgba(212,168,75,0.55); }
-.header-order-btns { display: flex; align-items: center; gap: 8px; }
+.header-order-btns { display: flex; align-items: center; gap: 8px; flex: 1; justify-content: flex-end; }
 .btn-order-page-header {
   color: var(--primary-dark); padding: 12px 18px;
   border-radius: 10px; font-weight: 700; font-size: 15px;
@@ -120,7 +118,11 @@ nav a:hover { background: #eef5f3; color: var(--primary); transform: scale(1.05)
   transition: all 0.3s; white-space: nowrap;
 }
 .btn-order-page-header:hover { background: #eef5f3; transform: translateY(-2px); }
-.menu-toggle { display: none; background: none; font-size: 24px; color: var(--primary); }
+.btn-order-page-header.active {
+  background: var(--primary); color: #fff; border-color: var(--primary);
+  box-shadow: 0 6px 16px rgba(10,92,79,0.25), 0 0 0 2px rgba(212,168,75,0.35);
+}
+.btn-order-page-header.active:hover { background: var(--primary-dark); }
 
 /* TRUST BAR */
 .trust-bar { background: #fff; border-bottom: 1px solid var(--border); }
@@ -146,6 +148,17 @@ nav a:hover { background: #eef5f3; color: var(--primary); transform: scale(1.05)
   .trust-bar-inner { gap: 8px 16px; padding: 10px 14px; }
   .trust-item { font-size: 12px; }
   .trust-divider { display: none; }
+  .header-order-btns { gap: 6px; }
+  .cart-btn { padding: 9px 12px; font-size: 12.5px; gap: 5px; }
+  .btn-order-page-header { padding: 9px 12px; font-size: 12.5px; gap: 5px; }
+}
+@media (max-width: 480px) {
+  .header-inner { padding: 10px 12px; gap: 6px; }
+  .logo-img { height: 34px; }
+  .logo-text h1 { font-size: 13px; }
+  .logo-text p { display: none; }
+  .header-order-btns { gap: 5px; }
+  .cart-btn, .btn-order-page-header { padding: 8px 9px; font-size: 11px; gap: 4px; }
 }
 
 /* FORM TRUST BAR (فوق نموذج الطلب) */
@@ -285,80 +298,6 @@ section { padding: 80px 20px; }
   .feature-card h4 { font-size: 18px; margin-bottom: 8px; }
   .feature-card p { font-size: 14px; }
 }
-
-#gallery { background: #fff; }
-.gallery-filters {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
-  margin-bottom: 18px;
-}
-.gallery-count {
-  text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 20px; font-weight: 600;
-}
-.filter-btn {
-  background: #eef5f3; color: var(--primary-dark); border: none;
-  padding: 9px 18px; border-radius: 20px; font-size: 14px; font-weight: 700;
-  transition: all 0.25s; flex-shrink: 0;
-}
-.filter-btn:hover { background: #dcebe7; }
-.filter-btn.active { background: var(--primary); color: #fff; }
-@media (max-width: 700px) {
-  .gallery-filters {
-    flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start;
-    scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch;
-    padding-bottom: 6px; margin: 0 -16px 18px; padding-inline: 16px;
-  }
-  .filter-btn { scroll-snap-align: start; }
-  .gallery-filters::-webkit-scrollbar { height: 4px; }
-  .gallery-filters::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-}
-.gallery-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px;
-}
-.gallery-item {
-  background: #f7faf8; border-radius: 14px; overflow: hidden;
-  border: 2px solid var(--border); transition: all 0.35s cubic-bezier(.2,.8,.2,1); position: relative;
-}
-.gallery-item:hover { border-color: var(--accent); transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-.gallery-img {
-  width: 100%; height: 220px; object-fit: cover; background: #f0f5f3;
-  transition: transform 0.5s cubic-bezier(.2,.8,.2,1), opacity 0.4s ease;
-  opacity: 0; animation: img-skeleton-pulse 1.2s ease-in-out infinite;
-}
-.gallery-img.img-loaded {
-  opacity: 1; animation: none; background: #f0f5f3;
-}
-@keyframes img-skeleton-pulse {
-  0%, 100% { background-color: #eef3f0; }
-  50% { background-color: #dde8e2; }
-}
-.gallery-item:hover .gallery-img { transform: scale(1.06); }
-.gallery-info { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-.gallery-info > div:first-child { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.gallery-info .title { font-size: 14px; font-weight: 700; color: var(--primary-dark); }
-.gallery-info .sub { font-size: 12px; color: var(--muted); }
-.gallery-actions { display: flex; gap: 6px; }
-.btn-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  background: #eef5f3; color: var(--primary); font-size: 16px;
-  transition: all 0.2s; border: none;
-}
-.btn-icon:hover { background: var(--primary); color: #fff; transform: scale(1.15); }
-.btn-icon.wa:hover { background: #25D366; }
-.gallery-note {
-  width: 100%; background: #f2f7f5; color: var(--muted); border: 1px dashed var(--border);
-  padding: 9px 12px; border-radius: 10px; font-size: 12px; text-align: center; line-height: 1.6;
-}
-.upload-cta {
-  grid-column: 1/-1; background: linear-gradient(135deg, #eef5f3, #dfece8);
-  border: 3px dashed var(--primary); border-radius: 16px;
-  padding: 40px 20px; text-align: center; cursor: pointer;
-  transition: all 0.3s;
-}
-.upload-cta:hover { background: linear-gradient(135deg, #dfece8, #cfe2dc); transform: scale(1.02) translateY(-5px); }
-.upload-cta .icon { font-size: 50px; margin-bottom: 12px; }
-.upload-cta h4 { color: var(--primary-dark); font-size: 20px; margin-bottom: 8px; }
-.upload-cta p { color: var(--muted); font-size: 14px; }
 
 .custom-info {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -547,64 +486,7 @@ section { padding: 80px 20px; }
   padding: 2px 8px; border-radius: 8px; font-size: 10px; font-weight: 700;
 }
 
-.design-picker-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px;
-}
-.design-pick-card {
-  border: 2px solid var(--border); border-radius: 12px; overflow: hidden;
-  cursor: pointer; transition: all 0.3s; background: #fff; text-align: center; position: relative;
-}
-.design-pick-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-.design-pick-card.active {
-  border-color: var(--primary); border-width: 3px; background: #eef5f3; transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(10,92,79,0.2), 0 0 0 3px rgba(10,92,79,0.12);
-}
-.design-pick-img-wrap { position: relative; }
-.design-pick-img-wrap img { cursor: zoom-in; }
-.design-select-circle {
-  position: absolute; top: 6px; right: 6px; z-index: 2;
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.9); background: rgba(0,0,0,0.15);
-  display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 13px; font-weight: 700; cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25); transition: all 0.25s; padding: 0;
-}
-.design-select-circle:hover { background: rgba(0,0,0,0.3); transform: scale(1.12); }
-.design-pick-card.active .design-select-circle {
-  background: var(--primary); border-color: var(--primary); animation: checkPop 0.3s ease;
-}
-.design-pick-card.active .design-select-circle::after { content: '✓'; }
-@keyframes checkPop { from { transform: scale(0); } to { transform: scale(1); } }
-.design-pick-card img { width: 100%; height: 110px; object-fit: cover; background: #f0f5f3; transition: transform 0.3s, opacity 0.4s ease; opacity: 0; animation: img-skeleton-pulse 1.2s ease-in-out infinite; }
-.design-pick-card img.img-loaded { opacity: 1; animation: none; }
-.design-pick-card:hover img { transform: scale(1.05); }
-.design-pick-name { font-size: 12px; font-weight: 700; color: var(--primary-dark); padding: 8px 6px; }
-.selected-design-display {
-  margin-top: 14px; background: #fff; border: 2px solid var(--primary);
-  border-radius: 14px; padding: 14px; display: flex; align-items: center; gap: 14px;
-  box-shadow: 0 8px 24px rgba(10,92,79,0.1); animation: fadeIn 0.3s;
-}
-.selected-design-display img {
-  width: 90px; height: 90px; object-fit: cover; border-radius: 10px; flex-shrink: 0;
-  border: 2px solid var(--accent);
-}
-.selected-design-display .sdd-info { flex: 1; min-width: 0; }
-.selected-design-display .sdd-tag {
-  display: inline-flex; align-items: center; gap: 6px; color: var(--success);
-  font-size: 12px; font-weight: 700; margin-bottom: 4px;
-}
-.selected-design-display h5 { font-size: 16px; color: var(--primary-dark); margin-bottom: 3px; }
-.selected-design-display p { font-size: 13px; color: var(--muted); }
-.sdd-actions { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-.sdd-actions button {
-  font-size: 12px; font-weight: 700; border-radius: 8px; padding: 6px 10px; cursor: pointer; border: none;
-}
-.sdd-change-btn { background: #eef5f3; color: var(--primary-dark); border: 1px solid var(--primary) !important; }
-.sdd-change-btn:hover { background: #dcece7; }
-.sdd-remove-btn { background: #fdecea; color: var(--danger, #d9534f); border: 1px solid var(--danger, #d9534f) !important; }
-.sdd-remove-btn:hover { background: #fadbd8; }
-
-/* كروت القطع الفردية (كل قطعة ليها تصميم واسم مستقل) */
+/* كروت القطع الفردية (كل قطعة ليها اسم مستقل) */
 .pieces-list { display: flex; flex-direction: column; gap: 14px; }
 .piece-card {
   border: 2px solid var(--border); border-radius: 14px; padding: 14px; background: #fff;
@@ -618,20 +500,6 @@ section { padding: 80px 20px; }
   background: var(--primary); color: #fff; font-size: 12px; font-weight: 700;
   padding: 3px 12px; border-radius: 20px;
 }
-.piece-design-btn {
-  display: flex; align-items: center; gap: 12px; width: 100%; text-align: right;
-  border: 2px dashed var(--border); border-radius: 10px; padding: 10px; background: #f7faf8;
-  cursor: pointer; transition: all 0.25s; margin-bottom: 10px;
-}
-.piece-design-btn:hover { border-color: var(--accent); }
-.piece-design-btn.chosen { border-style: solid; border-color: var(--primary); background: #eef5f3; }
-.piece-design-thumb {
-  width: 52px; height: 52px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #eef5f3;
-  display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--muted);
-}
-.piece-design-text { flex: 1; min-width: 0; }
-.piece-design-text .lbl { font-size: 11px; color: var(--muted); font-weight: 700; }
-.piece-design-text .val { font-size: 14px; color: var(--primary-dark); font-weight: 700; }
 .piece-name-input {
   width: 100%; padding: 10px 12px; border: 2px solid var(--border); border-radius: 10px;
   font-size: 14px; font-family: inherit;
@@ -907,12 +775,6 @@ section { padding: 80px 20px; }
 .final-order-review .frow.fprice .flabel { font-size: 15px; color: var(--primary-dark); }
 .final-order-review .frow.fprice .fval { font-size: 22px; color: var(--accent-dark); }
 .final-review-pieces-list li { display: flex; align-items: center; gap: 8px; text-align: right; }
-.final-review-thumb {
-  width: 30px; height: 30px; object-fit: cover; border-radius: 6px; border: 1px solid var(--border); flex-shrink: 0;
-}
-.final-review-thumb-empty {
-  display: flex; align-items: center; justify-content: center; background: #f3f3f3; font-size: 14px;
-}
 .remote-gov-note {
   margin-top: 8px; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 700;
   background: #fff8ea; color: var(--primary-dark); border: 1px solid rgba(212,168,75,0.5);
@@ -1260,7 +1122,7 @@ footer {
 .video-expand-btn:hover { background: rgba(0,0,0,0.8); transform: scale(1.08); }
 
 .scroll-top-btn {
-  position: fixed; bottom: 24px; right: 24px; z-index: 98;
+  position: fixed; bottom: 24px; right: 24px; z-index: 160;
   width: 48px; height: 48px; border-radius: 50%; border: none; cursor: pointer;
   background: var(--accent, #0a7d5c); color: #fff; font-size: 22px;
   display: none; align-items: center; justify-content: center;
@@ -1271,6 +1133,8 @@ footer {
 .scroll-top-btn:hover { transform: translateY(-3px); }
 @media (max-width: 600px) {
   .scroll-top-btn { bottom: 90px; width: 44px; height: 44px; font-size: 19px; }
+  /* على الموبايل بنخفي زرار الفيسبوك العايم عشان نقلل زحمة الأزرار — واتساب والرجوع لفوق كفاية */
+  .float-fb { display: none; }
 }
 
 .float-fb {
@@ -1293,37 +1157,8 @@ footer {
   padding: 20px; max-height: 94vh; overflow-y: auto; position: relative;
   animation: slideUp 0.3s;
 }
-#imgModal .modal-content {
-  max-width: 96vw; width: 96vw; max-height: 96vh;
-}
-#imgModal #modalImg {
-  width: auto; max-width: 100%; max-height: 80vh; object-fit: contain; background: #0000;
-  display: block; margin: 0 auto; cursor: zoom-out;
-  -webkit-user-drag: none; user-select: none;
-}
 .modal-img-wrap { position: relative; touch-action: pan-y; }
-.gallery-lb-nav {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 44px; height: 44px; border-radius: 50%;
-  background: rgba(10,15,13,0.55); color: #fff; border: 1px solid rgba(255,255,255,0.35);
-  font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s, transform 0.15s; z-index: 5; user-select: none;
-}
-.gallery-lb-nav:hover { background: rgba(10,15,13,0.8); }
-.gallery-lb-nav:active { transform: translateY(-50%) scale(0.9); }
-#imgModal .gallery-lb-prev { inset-inline-start: 8px; }
-#imgModal .gallery-lb-next { inset-inline-end: 8px; }
-#designZoomModal .gallery-lb-prev { inset-inline-start: 8px; }
-#designZoomModal .gallery-lb-next { inset-inline-end: 8px; }
-#designZoomModal .modal-img-wrap { touch-action: pan-y; }
-.gallery-lb-counter { text-align: center; font-size: 13px; color: var(--muted); font-weight: 600; margin: 2px 0 12px; }
-@media (max-width: 700px) {
-  #imgModal .modal-content { max-width: 100%; width: 100%; padding: 14px; }
-  #imgModal #modalImg { max-height: 68vh; }
-  .gallery-lb-nav { width: 38px; height: 38px; font-size: 17px; }
-}
 @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-#designZoomModal { z-index: 210; }
 .modal-close {
   position: absolute; top: 14px; left: 14px; background: rgba(10,15,13,0.65);
   width: 44px; height: 44px; border-radius: 50%; font-size: 20px; font-weight: 700;
@@ -1360,8 +1195,6 @@ footer {
 }
 
 @media (max-width: 900px) {
-  nav, .header-order-btns { display: none; }
-  .menu-toggle { display: block; }
   .hero { padding: 48px 16px 60px; }
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .hero-text h2 { font-size: 34px; }
@@ -1374,24 +1207,16 @@ footer {
   .section-head h3 { font-size: 24px; }
   .section-head p { font-size: 14px; }
   .order-body { padding: 20px; }
-  .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .gallery-img { height: 130px; }
-  .gallery-info { padding: 10px; flex-direction: column; align-items: flex-start; gap: 6px; }
-  .gallery-actions { align-self: flex-end; }
-  .design-picker-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  nav.mobile-open {
-    display: block; position: absolute; top: 100%; left: 0; right: 0;
-    background: #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1); padding: 16px;
-  }
-  nav.mobile-open ul { flex-direction: column; }
 }
 
 /* SMALL PHONES (320px+) */
 @media (max-width: 400px) {
-  .header-inner { padding: 12px 14px; gap: 10px; }
-  .logo-img { height: 42px; }
-  .logo-text h1 { font-size: 16px; }
-  .cart-btn { padding: 10px 14px; font-size: 13px; }
+  .header-inner { padding: 12px 14px; gap: 8px; }
+  .logo-img { height: 38px; }
+  .logo-text h1 { font-size: 14px; }
+  .logo-text p { display: none; }
+  .cart-btn { padding: 8px 10px; font-size: 11.5px; gap: 4px; }
+  .btn-order-page-header { padding: 8px 10px; font-size: 11.5px; gap: 4px; }
   .hero { padding: 56px 14px 70px; }
   .hero-badge { padding: 8px 12px; font-size: 11px; }
   .hero-badge.b1 { top: 6%; left: 4px; }
@@ -1401,8 +1226,6 @@ footer {
   .btn-primary, .btn-ghost, .btn-cta-main { width: 100%; justify-content: center; }
   .btn-cta-main { padding: 18px 30px; font-size: 18px; order: -1; }
   .hero-btns { flex-direction: column; align-items: stretch; }
-  .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .design-picker-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-trust { grid-template-columns: 1fr; }
   .video-showcase-inner h4 { font-size: 15px; }
   .video-showcase-inner p { font-size: 12px; }
@@ -1436,7 +1259,7 @@ footer {
   outline: 3px solid rgba(10,92,79,0.35); outline-offset: 3px;
 }
 .btn-cta-main { font-size: clamp(17px, 2.2vw, 20px); }
-.filter-btn.active, .btn-add-person-size.added { box-shadow: 0 6px 14px rgba(10,92,79,0.25); }
+.btn-add-person-size.added { box-shadow: 0 6px 14px rgba(10,92,79,0.25); }
 
 /* 2) Spacing — توحيد الفراغات بين العناصر (بس للشاشات الكبيرة، عشان متبوظش موبايل) */
 @media (min-width: 901px) {
@@ -1445,22 +1268,21 @@ footer {
 }
 .hero-btns { row-gap: 16px; column-gap: 14px; }
 .hero-stats { row-gap: 18px; }
-.features-grid, .gallery-grid, .offers-grid, .materials, .shipping-opts { gap: 18px; }
+.features-grid, .offers-grid, .materials, .shipping-opts { gap: 18px; }
 @media (min-width: 700px) {
   .features-grid { gap: 26px; }
 }
 .container { padding-inline: 4px; }
 
 /* 3) Cards — ظلال ناعمة، حواف مدورة، إزالة الشكل الرخيص */
-.feature-card, .gallery-item, .offer-card, .piece-card, .selected-design-display, .order-body {
+.feature-card, .offer-card, .piece-card, .order-body {
   border-radius: 18px;
   box-shadow: 0 6px 22px rgba(10,92,79,0.07);
   transition: transform 0.3s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s cubic-bezier(.2,.8,.2,1), border-color 0.3s ease;
 }
 .feature-card { border: 1px solid rgba(10,92,79,0.05); }
-.gallery-item { border-width: 1px; }
 .offer-card { border-radius: 20px; }
-.feature-card:hover, .gallery-item:hover, .offer-card:hover {
+.feature-card:hover, .offer-card:hover {
   box-shadow: 0 22px 46px rgba(10,92,79,0.16);
 }
 
@@ -1468,8 +1290,8 @@ footer {
 .section-head h3 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; letter-spacing: -0.3px; }
 .section-head p { font-size: clamp(14px, 1.6vw, 16.5px); line-height: 1.8; }
 .hero-text h2 { font-weight: 800; letter-spacing: -0.4px; }
-.feature-card h4, .offer-name, .gallery-info .title { font-weight: 800; }
-.feature-card p, .offer-desc, .gallery-info .sub { font-weight: 500; }
+.feature-card h4, .offer-name { font-weight: 800; }
+.feature-card p, .offer-desc { font-weight: 500; }
 .logo-text h1 { font-weight: 800; }
 
 /* 5) Mobile — تمركز صحيح وعدم تداخل العناصر */
@@ -1486,10 +1308,9 @@ footer {
 }
 
 /* 6) Micro-interactions — انتقالات ناعمة 0.2s–0.3s */
-.feature-icon, .filter-btn, .btn-icon, .design-pick, .material-opt, .ship-opt, .piece-card {
+.feature-icon, .material-opt, .ship-opt, .piece-card {
   transition: all 0.25s cubic-bezier(.2,.8,.2,1);
 }
-.gallery-item, .gallery-img { transition-duration: 0.3s; }
 
 /* 7) Trust signals — تكبير/توضيح عناصر الثقة الحالية */
 .trust-item { font-size: 13.5px; gap: 8px; }
@@ -1531,11 +1352,12 @@ footer {
 }
 @media (max-width: 768px) {
   .floating-order-btn.show { display: block; }
-  /* لما زرار "اطلب الآن" العائم يظهر تحت، بيغطي على زرار الواتساب والفيسبوك،
+  /* لما زرار "اطلب الآن" العائم يظهر تحت، بيغطي على زرار الواتساب والفيسبوك وزرار الرجوع لفوق،
      فبنرفعهم لفوق شوية عشان يفضلوا ظاهرين وماحدش يغطي التاني */
   body.has-floating-order .float-wa { bottom: 84px; }
   body.has-floating-order .float-tooltip { bottom: 94px; }
   body.has-floating-order .float-fb { bottom: 160px; }
+  body.has-floating-order .scroll-top-btn { bottom: 160px; }
 }
 .view-nav-bar button {
   background: #fff; color: var(--primary-dark); border: 2.5px solid var(--primary);
@@ -1702,6 +1524,56 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
   .zbq-chat-panel { right: 16px; bottom: 92px; }
   .zbq-chat-fab { right: 16px; }
 }
+
+/* =========================================================
+   إصلاح نهائي لمقاسات الشاشات الصغيرة (لازم يفضل آخر بلوك
+   في الـ CSS عشان ياخد أولوية على أي قاعدة سابقة بنفس الخصوصية)
+   ========================================================= */
+html, body { max-width: 100%; overflow-x: hidden; }
+.container, .header-inner, .trust-bar-inner, .hero-inner, section {
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  html { font-size: 14px; }
+
+  .top-banner { font-size: 11.5px; padding: 8px 0; }
+  .marquee { gap: 22px; }
+
+  .hero-rating-row .stars { font-size: 13px; }
+  .hero-rating-row .rating-text { font-size: 11.5px; }
+  .hero-text h2 { font-size: 24px; line-height: 1.3; margin-bottom: 12px; }
+  .hero-text p { font-size: 13px; margin-bottom: 16px; }
+  .stat b { font-size: 18px; }
+  .stat small { font-size: 10.5px; }
+  .hero-trust-note { font-size: 11px; }
+  .hero-track-cta { font-size: 12px; padding: 9px 12px; }
+
+  .trust-item { font-size: 10.5px; gap: 5px; }
+  .trust-item .trust-icon { width: 24px; height: 24px; font-size: 12px; }
+  .trust-item .stars { font-size: 10.5px; }
+  .trust-bar-inner { gap: 6px 10px; padding: 8px 10px; }
+
+  .section-head h3 { font-size: 20px; }
+  .section-head p { font-size: 12.5px; }
+
+  .cart-btn, .btn-order-page-header { font-size: 10.5px; padding: 7px 8px; }
+  .logo-text h1 { font-size: 12px; }
+
+  .btn-primary, .btn-cta-main { font-size: 14px; padding: 13px 18px; }
+  .btn-ghost { font-size: 13px; }
+
+  .feature-card h4, .offer-name { font-size: 14px; }
+  .feature-card p, .offer-desc { font-size: 12px; }
+
+  section { padding: 24px 12px; }
+  .section-head { margin-bottom: 18px; }
+}
+
+@media (max-width: 360px) {
+  html { font-size: 13px; }
+  .hero-text h2 { font-size: 20px; }
+  .hero-text p { font-size: 12px; }
+}
 </style>
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ziba-q.com/">
@@ -1726,7 +1598,7 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
     "@type": "Offer",
     "url": "https://ziba-q.com/",
     "priceCurrency": "EGP",
-    "price": "370",
+    "price": "400",
     "availability": "https://schema.org/InStock",
     "priceValidUntil": "2027-12-31"
   },
@@ -1753,7 +1625,7 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 <!-- TOP BANNER -->
 <div class="top-banner">
   <div class="marquee">
-    <span>🩺 بالطوهات مطرزة مخصصة لكل كليات الجامعة ✦ 🚚 شحن سريع يوم ليومين أو اقتصادي 3 لـ 7 أيام ✦ 👨‍⚕️ طباعة الاسم والتصميم اللي تحبه ✦ 💰 أسعار تبدأ من 370 ج ✦ 🎁 ارفع صورتك وهنعملك بالطو شبهها ✦ 📘 تابعنا على فيسبوك لآخر العروض ✦ 🩺 بالطوهات مطرزة مخصصة لكل كليات الجامعة ✦ 🚚 شحن سريع يوم ليومين أو اقتصادي 3 لـ 7 أيام</span>
+    <span>🩺 بالطوهات مطرزة مخصصة لكل كليات الجامعة ✦ 🚚 شحن سريع يوم ليومين أو اقتصادي 3 لـ 7 أيام ✦ 👨‍⚕️ طباعة الاسم والتصميم اللي تحبه ✦ 💰 أسعار تبدأ من 400 ج ✦ 🎁 ارفع صورتك وهنعملك بالطو شبهها ✦ 📘 تابعنا على فيسبوك لآخر العروض ✦ 🩺 بالطوهات مطرزة مخصصة لكل كليات الجامعة ✦ 🚚 شحن سريع يوم ليومين أو اقتصادي 3 لـ 7 أيام</span>
   </div>
 </div>
 <!-- HEADER -->
@@ -1767,20 +1639,11 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
       </div>
     </div>
     <button type="button" id="pwaInstallBtn" onclick="triggerPwaInstall()" style="display:none; align-items:center; gap:6px; background:var(--primary-dark,#0a5c4f); color:#fff; border:none; padding:9px 14px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap;">⬇️ ثبّت التطبيق</button>
-    <nav id="mainNav">
-      <ul>
-        <li><a href="#" onclick="switchView('home'); return false;">الرئيسية</a></li>
-        <li><a href="#" onclick="switchView('gallery'); return false;">المعرض</a></li>
-        <li><a href="#" onclick="switchView('story'); return false;">قصتنا</a></li>
-        <li><a href="#" onclick="switchView('track'); return false;">تتبع طلبك</a></li>
-        <li><a href="#" onclick="switchView('order', 'faq'); return false;">الأسئلة</a></li>
-      </ul>
-    </nav>
     <div class="header-order-btns">
-      <a href="#" class="btn-order-page-header" onclick="switchView('order'); return false;">📃 صفحة الطلب</a>
-      <a href="#" class="cart-btn" onclick="goToOrderFormAndFocus(); return false;">📝 اطلب الآن</a>
+      <a href="#" class="btn-order-page-header" id="headerBtnHome" onclick="switchView('home'); return false;">🏠 الرئيسية</a>
+      <a href="#" class="btn-order-page-header" id="headerBtnOrder" onclick="goToOrderFormAndFocus(); return false;">📝 اطلب الآن</a>
+      <a href="#" class="btn-order-page-header" id="headerBtnTrack" onclick="switchView('track'); return false;">🔎 فين طلبي؟</a>
     </div>
-    <button class="menu-toggle" aria-label="فتح قائمة التنقل" onclick="document.getElementById('mainNav').classList.toggle('mobile-open')">☰</button>
   </div>
 </header>
 <!-- TRUST BAR -->
@@ -1800,8 +1663,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 <div class="site-view active" id="view-home">
 <div class="view-nav-bar">
   <button type="button" class="current" disabled>🏠 الرئيسية</button>
-  <button type="button" onclick="switchView('gallery')">🖼️ المعرض</button>
-  <button type="button" class="btn-order-page-nav" onclick="switchView('order')">📃 صفحة الطلب</button>
   <button type="button" class="btn-order-highlight" onclick="goToOrderFormAndFocus()">📝 اطلب الآن</button>
 </div>
 <section class="hero" id="home">
@@ -1888,24 +1749,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 </div>
 <section>
   <div class="container">
-    <div class="section-head">
-      <span class="tag">💬 أسئلة الطلاب</span>
-      <h3>أكتر الأسئلة اللي بتوصلنا من الطلاب</h3>
-      <p>لخصنالك أهم اللي بيتسأل عنه قبل الطلب</p>
-    </div>
-    <div class="faq-list" id="reviewsFaqList">
-      <div class="faq-item"><button class="faq-q">الخامة والطباعة بتطلع فعلاً محترفة؟</button><div class="faq-a"><p>أيوه، البالطو مصنوع من خامة <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">جابردين</mark> أصلية 100% (مش بوليستر)، والاسم/التصميم بيتطبع بشكل احترافي وثابت مع الغسيل.</p></div></div>
-      <div class="faq-item"><button class="faq-q">السعر عندكم بيتفرق عن أماكن تانية؟</button><div class="faq-a"><p>أيوه، بنقدملك نفس خامة الجابردين والتطريز الاحترافي بسعر أقل من المنافسين، لأننا بنبيع أونلاين من غير مصاريف محل.</p></div></div>
-      <div class="faq-item"><button class="faq-q">بتلتزموا بميعاد التسليم المتفق عليه؟</button><div class="faq-a"><p>أيوه، بنلتزم بالمواعيد المتفق عليها، ولو حصل أي ظرف استثنائي بيأخر التسليم بنكون على تواصل معاك أول بأول من غير ما نسيبك مستني من غير خبر.</p></div></div>
-      <div class="faq-item"><button class="faq-q">لو المقاس مجاش معايا، ممكن أستبدله حتى لو غسلته؟</button><div class="faq-a"><p>أكيد، تواصل معانا على الواتساب وهنرتبلك الاستبدال بسهولة — <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">مش شرط تكون رجعته قبل ما تغسله</mark>، ضمان المقاس والخامة شغال حتى بعد أول غسلة.</p></div></div>
-      <div class="faq-item"><button class="faq-q">التواصل والرد بيكون سريع؟</button><div class="faq-a"><p>أيوه، بنرد على رسايل الواتساب في نفس اليوم على أي استفسار قبل أو بعد الطلب.</p></div></div>
-      <div class="faq-item"><button class="faq-q">أقدر أطلب تصميم مخصص بالظبط زي ما في بالي؟</button><div class="faq-a"><p>أيوه، ابعتلنا الفكرة أو الصورة اللي في بالك وهنعملهالك بالظبط.</p></div></div>
-      <div class="faq-item"><button class="faq-q">الخامة سميكة ومش شفافة؟</button><div class="faq-a"><p>أيوه، خامة <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">جابردين</mark> تقيلة الوزن ومش شفافة خالص، ومريحة في اللبس طول اليوم الدراسي.</p></div></div>
-    </div>
-  </div>
-</section>
-<section>
-  <div class="container">
     <div class="add-review-box" id="addReviewBox">
       <h4>✍️ عندك تجربة معانا؟ شاركنا رأيك</h4>
       <p class="add-review-sub">تقييمك بيساعد طلاب تانيين ياخدوا قرارهم — وبيوصلنا مباشرة على الواتساب.</p>
@@ -1945,8 +1788,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 <div class="site-view" id="view-order">
 <div class="view-nav-bar">
   <button type="button" onclick="switchView('home')">🏠 الرئيسية</button>
-  <button type="button" onclick="switchView('gallery')">🖼️ المعرض</button>
-  <button type="button" class="current" disabled>📃 صفحة الطلب</button>
   <button type="button" class="btn-order-highlight" onclick="goToOrderFormAndFocus()">📝 اطلب الآن</button>
 </div>
 <section class="hero" style="padding: 40px 16px 20px;">
@@ -1956,72 +1797,15 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
     <p style="color: var(--muted); max-width: 560px; margin: 10px auto 0;">اختار المقاس والتصميم وبياناتك، وإحنا هنتولى الباقي.</p>
   </div>
 </section>
-<section>
+<section style="padding-top: 30px; padding-bottom: 10px;">
   <div class="container">
-    <div class="section-head">
-      <span class="tag">✨ ليه ZibaQ؟</span>
-      <h3>كل اللي تحتاجه في مكان واحد</h3>
-      <p>بالطو مش بس للكلية… ده هويتك اللي هتفتخر بيها قدام زمايلك</p>
+    <div class="quick-facts-row" style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px 16px; text-align:center;">
+      <span class="form-trust-item">🧵 خامة جابردين أصلية</span>
+      <span class="form-trust-item">📏 مقاسات من S لـ 5XL</span>
+      <span class="form-trust-item">🖨️ طباعة باسمك</span>
+      <span class="form-trust-item" id="zbqPriceAbText">💰 القطعة 400 ج</span>
+      <span class="form-trust-item">🛡️ ضمان الاستبدال لحد 4 غسلات</span>
     </div>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">🎨</div>
-        <h4>تصميمات عصرية</h4>
-        <p>معرض تصاميم متجدد يواكب أحدث الصيحات.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🧵</div>
-        <h4>خامة جابردين</h4>
-        <p>قماش جابردين أصلي 100% (مش بوليستر)، مريح في اللبس طول اليوم الدراسي.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">✅</div>
-        <h4>تفصيل عملي</h4>
-        <p>3 جيوب (جيب صدر + جيبين جانبيين)، أكمام طويلة، وسحاب أمامي لسهولة اللبس والخلع.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">💰</div>
-        <h4>أسعار مناسبة</h4>
-        <p id="zbqPriceAbText">القطعة بـ 370 ج، وتقل لحد <b style="color:var(--accent-dark);">250 ج للقطعة</b> كل ما طلبت مع صحابك أكتر.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📏</div>
-        <h4>جميع المقاسات</h4>
-        <p>من S لـ 5XL مع دليل مقاسات يساعدك تختار.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🖨️</div>
-        <h4>طباعة دقيقة</h4>
-        <p>طباعة/تطريز احترافي بالاسم والتصميم اللي تختاره.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section style="background: linear-gradient(180deg, #f7faf8, #fff);">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag">🛡️ ضماناتنا ليك</span>
-      <h3>لو حصل أي حاجة، إنت مش هتخسر جنيه واحد</h3>
-      <p>مش عايزينك تقلق وإنت بتطلب — لو أي حاجة مش عاجباك، بنستبدلها أو نعوضك من غير ما تدفع تاني</p>
-    </div>
-    <div class="features-grid">
-      <div class="feature-card" style="border: 2px solid #ffcf4d; background: linear-gradient(180deg, #fffbea, #fff);">
-        <div class="feature-icon">🧴</div>
-        <h4>الطباعة وقعت أو اتبهتت؟ <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">مش هتخسر البالطو</mark></h4>
-        <p>لو حصل أي حاجة للطباعة أو التطريز حتى بعد <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">3 أو 4 غسلات</mark>، بنستبدلهولك مجانًا من غير ما تدفع جنيه زيادة ومن غير أي نقاش.</p>
-      </div>
-      <div class="feature-card" style="border: 2px solid #ffcf4d; background: linear-gradient(180deg, #fffbea, #fff);">
-        <div class="feature-icon">📏</div>
-        <h4>المقاس مش مظبوط؟ <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">مش هتفضل عالق فيه</mark></h4>
-        <p>بنستبدلهولك بالمقاس الصح فوراً — <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">حتى لو كان بعد أول غسلة، مش شرط قبلها</mark>.</p>
-      </div>
-      <div class="feature-card" style="border: 2px solid #ffcf4d; background: linear-gradient(180deg, #fffbea, #fff);">
-        <div class="feature-icon">🧵</div>
-        <h4>مش عاجبتك الخامة؟ <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">مش هتفضل واقف على فلوسك</mark></h4>
-        <p>البالطو خامة <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">جابردين أصلية 100%، مش بوليستر</mark>. ولو حسيت إنها مش زي ما توقعت، كلمنا وهنشوفلك حل يريحك — <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">الضمان ده مستمر معاك حتى بعد أول غسلة</mark>.</p>
-      </div>
-    </div>
-    <p style="text-align:center; color: var(--muted); font-size: 13px; margin-top: 22px; max-width: 620px; margin-inline: auto;">كل اللي عليك إنك تكلمنا على الواتساب وتوريلنا المشكلة، وهنتصرف بسرعة — إحنا واثقين في خامتنا وطباعتنا <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">100%</mark>.</p>
   </div>
 </section>
 <section id="order">
@@ -2030,13 +1814,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
       <span class="tag">📝 نموذج الطلب</span>
       <h3>اطلب البالطو في دقايق</h3>
       <p>خطوات بسيطة وسريعة، وهتوصلنا مباشرة على الواتساب — من غير أي التزام قبل ما تأكد طلبك</p>
-    </div>
-
-    <div class="form-trust-bar">
-      <div class="form-trust-item"><span class="check">✔</span> خامة جابردين عالية الجودة</div>
-      <div class="form-trust-item"><span class="check">✔</span> أكثر من 400 تصميم</div>
-      <div class="form-trust-item"><span class="check">✔</span> الشحن لجميع محافظات مصر</div>
-      <div class="form-trust-item"><span class="check">✔</span> الدفع عند الاستلام</div>
     </div>
 
     <div style="text-align:center; margin: 6px 0 18px;">
@@ -2055,16 +1832,14 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
         <div class="progress-steps" id="progressSteps">
           <div class="progress-step active" data-step="info"><div class="circle">1</div><div class="label">بياناتك</div></div>
           <div class="progress-step" data-step="size"><div class="circle">2</div><div class="label">المقاس والعدد</div></div>
-          <div class="progress-step" data-step="product"><div class="circle">3</div><div class="label">التصميم</div></div>
-          <div class="progress-step" data-step="shipping"><div class="circle">4</div><div class="label">الشحن</div></div>
-          <div class="progress-step" data-step="payment"><div class="circle">5</div><div class="label">الدفع</div></div>
+          <div class="progress-step" data-step="shipping"><div class="circle">3</div><div class="label">الشحن</div></div>
+          <div class="progress-step" data-step="payment"><div class="circle">4</div><div class="label">الدفع</div></div>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
       </div>
       <div class="order-tabs">
         <button class="order-tab active" data-tab="info">📋 بياناتك</button>
         <button class="order-tab" data-tab="size">📏 المقاس والعدد</button>
-        <button class="order-tab" data-tab="product">🎨 التصميم</button>
         <button class="order-tab" data-tab="shipping">🚚 الشحن</button>
         <button class="order-tab" data-tab="payment">💳 الدفع</button>
       </div>
@@ -2161,32 +1936,11 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
           </div>
           <div class="form-group">
             <label>العنوان بالتفصيل <span class="req">*</span></label>
-            <div class="form-row">
-              <div class="form-group">
-                <label>المركز / المدينة <span class="req">*</span></label>
-                <input type="text" id="addrCenter" placeholder="مثال: مركز قويسنا">
-                <div class="field-error-msg" id="err-addrCenter">من فضلك اكتب اسم المركز أو المدينة</div>
-              </div>
-              <div class="form-group">
-                <label>القرية أو الحي <span class="req">*</span></label>
-                <input type="text" id="addrVillage" placeholder="مثال: قرية ميت برة">
-                <div class="field-error-msg" id="err-addrVillage">من فضلك اكتب اسم القرية أو الحي</div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label>الشارع <span class="req">*</span></label>
-                <input type="text" id="addrStreet" placeholder="مثال: شارع المدرسة">
-                <div class="field-error-msg" id="err-addrStreet">من فضلك اكتب اسم الشارع</div>
-              </div>
-              <div class="form-group">
-                <label>أقرب علامة مميزة <span class="req">*</span></label>
-                <input type="text" id="addrLandmark" placeholder="مثال: بجوار المسجد الكبير">
-                <div class="field-error-msg" id="err-addrLandmark">من فضلك اكتب أقرب علامة مميزة</div>
-              </div>
-            </div>
-            <textarea id="address" required style="display:none;" aria-hidden="true" tabindex="-1"></textarea>
-            <div class="field-error-msg" id="err-address">من فضلك اكمل بيانات العنوان بالتفصيل (المركز، القرية/الحي، الشارع، أقرب علامة مميزة)</div>
+            <textarea id="address" required placeholder="مثال: المنوفية - قويسنا - ميت برة - جنب الجامع الكبير" style="min-height:90px;"></textarea>
+            <div class="field-error-msg" id="err-address">من فضلك ادخل العنوان بالتفصيل</div>
+            <small style="color: var(--muted); font-size: 12px; display: block; margin-top: 6px;">
+              📞 هنتواصل معاك بعد الطلب عشان نأكد التصميم والاسم اللي هيتطبع.
+            </small>
           </div>
           <button class="btn-primary" onclick="attemptSwitchTab('size')" style="width: 100%;">التالي: المقاس&nbsp;والعدد&nbsp;←</button>
         </div>
@@ -2200,7 +1954,7 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
               <button type="button" onclick="changePeopleCount(1)">+</button>
             </div>
             <small style="color: var(--muted); font-size: 12px; display: block; margin-top: 8px;">
-              💡 لو الأوردر لأكتر من شخص، حط عددهم هنا وهيتفتح لكل واحد خانة طول ووزن ونرشحله مقاسه.
+              💡 هنحدد المقاس المناسب تلقائي من الطول والوزن، وتقدر تغيّره يدوي بعدين.
             </small>
           </div>
 
@@ -2210,9 +1964,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
             <label>👕 إجمالي المقاسات والكمية في الطلب <button type="button" id="sizeGuideBtn" style="background:none; border:1px solid var(--primary); color:var(--primary); border-radius:20px; padding:3px 12px; font-size:12px; font-weight:700; cursor:pointer; margin-right:8px;">📏 دليل المقاسات</button></label>
             <div class="sizes-grid" id="sizesGrid"></div>
             <div id="qtyIncentive" class="qty-incentive" style="display:none;"></div>
-            <small style="color: var(--muted); font-size: 12px; display: block; margin-top: 10px;">
-              📏 المقاسات اللي بتدوسها "ضيف للطلب" فوق بتتحسب هنا تلقائي، وتقدر كمان تزوّد أو تقلّل يدويًا من هنا في أي وقت.
-            </small>
           </div>
           <button type="button" id="sizeGuideBtnStandalone" onclick="document.getElementById('sizeGuideBtn').click()" style="background:none; border:1px solid var(--primary); color:var(--primary); border-radius:20px; padding:6px 16px; font-size:13px; font-weight:700; cursor:pointer; margin-bottom: 14px;">📏 دليل المقاسات</button>
 
@@ -2225,14 +1976,14 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
                   <div class="offer-icon">👥</div>
                   <div class="offer-name">عرض الاتنين</div>
                   <div class="offer-desc">اطلب 2 بالطوهات واحصل على السعر ده للبالطو</div>
-                  <div class="offer-price-row"><span class="offer-price">290</span><span class="offer-price-unit">ج / بالطو</span></div>
+                  <div class="offer-price-row"><span class="offer-price">320</span><span class="offer-price-unit">ج / بالطو</span></div>
                   <div class="offer-select-hint">اختار العرض ده</div>
                 </div>
                 <div class="offer-card" data-offer-pieces="3" onclick="applyOffer(3)">
                   <div class="offer-icon">👨‍👩‍👧</div>
                   <div class="offer-name">عرض الصحاب</div>
                   <div class="offer-desc">اطلب 3 بالطوهات واحصل على السعر ده للبالطو</div>
-                  <div class="offer-price-row"><span class="offer-price">280</span><span class="offer-price-unit">ج / بالطو</span></div>
+                  <div class="offer-price-row"><span class="offer-price">310</span><span class="offer-price-unit">ج / بالطو</span></div>
                   <div class="offer-select-hint">اختار العرض ده</div>
                 </div>
                 <div class="offer-card offer-best" data-offer-pieces="10" onclick="applyOffer(10)">
@@ -2240,13 +1991,26 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
                   <div class="offer-icon">🔥</div>
                   <div class="offer-name">عرض الشلة</div>
                   <div class="offer-desc">اطلب 10 بالطوهات أو أكثر واحصل على السعر ده للبالطو</div>
-                  <div class="offer-price-row"><span class="offer-price">250</span><span class="offer-price-unit">ج / بالطو</span></div>
+                  <div class="offer-price-row"><span class="offer-price">280</span><span class="offer-price-unit">ج / بالطو</span></div>
                   <div class="offer-select-hint">اختار العرض ده</div>
                 </div>
               </div>
               <div class="special-size-offer-note" id="specialSizeOfferNote"></div>
+              <div id="notebookMedalOfferBox" style="margin-top:14px; background:#fff8ec; border:1px dashed #f0c987; border-radius:10px; padding:10px 12px;">
+                <div style="font-size:13px; color:var(--text); margin-bottom:8px;">
+                  📔🏅 عايز تضيف عرض بالطو + نوتة + مدالية بنفس التصميم لكل قطعة عادية في الطلب بـ <b><span id="notebookMedalOfferPrice">380</span> ج</b>؟
+                </div>
+                <div style="display:flex; gap:16px;">
+                  <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer;">
+                    <input type="radio" name="notebookMedalOfferChoice" value="yes" onchange="setNotebookMedalOfferChoice(true)"> أيوه
+                  </label>
+                  <label style="display:flex; align-items:center; gap:6px; font-size:13px; cursor:pointer;">
+                    <input type="radio" name="notebookMedalOfferChoice" value="no" onchange="setNotebookMedalOfferChoice(false)"> لأ
+                  </label>
+                </div>
+              </div>
             </div>
-            <div class="material-opt active" data-mat="gaberdine" data-price="300" style="display:none;"></div>
+            <div class="material-opt active" data-mat="gaberdine" data-price="330" style="display:none;"></div>
           </div>
 
           <div class="live-total-box" id="liveTotalBox1" style="display:none;">
@@ -2256,39 +2020,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 
           <div class="step-nav">
             <button class="btn-back" onclick="switchTab('info')">→&nbsp;رجوع</button>
-            <button class="btn-primary" onclick="attemptSwitchTab('product')">التالي: اختيار التصميم لكل&nbsp;قطعة&nbsp;←</button>
-          </div>
-        </div>
-
-        <div class="tab-content" data-content="product">
-          <div class="form-group" id="piecesGroup">
-            <label>🎨 اختار التصميم والاسم المطبوع لكل قطعة <span class="req">*</span></label>
-            <small style="color: var(--muted); font-size: 12px; display: block; margin: -6px 0 10px;">
-              💡 لو كل قطعة لشخص مختلف، اكتب طول ووزن صاحب القطعة دي هنا (اختياري) عشان نضمن دقة المقاس أكتر.
-            </small>
-            <div id="noPiecesNote" style="display:none; background:#fff4e5; border-radius:10px; padding:12px 14px; font-size:14px; color: var(--primary-dark); line-height:1.7; margin-bottom: 10px;">
-              ⚠️ من فضلك ارجع لخطوة "المقاس والعدد" واختار كام قطعة عايز الأول.
-            </div>
-            <div class="pieces-list" id="piecesList"></div>
-            <div style="background:#eef5f3; border-radius:10px; padding:10px 14px; margin-top:10px; font-size:14px; color: var(--text); line-height:1.7;">
-              🎨 عندنا أكتر من 400 تصميم — مش لاقي اللي في بالك؟ راسلنا على الواتساب وهنبعتلك المزيد.
-            </div>
-            <small style="color: var(--muted); font-size: 12px; display: block; margin-top: 6px;">
-              💡 كل قطعة ليها تصميم واسم مستقل — لو الأوردر لأكتر من شخص، اختار لكل واحد تصميمه واسمه اللي هيتطبع بشكل منفصل.
-            </small>
-          </div>
-
-          <div class="form-group" id="designDescGroup" style="display:none;">
-            <input type="text" id="designDesc" value="">
-          </div>
-
-          <div class="live-total-box" id="liveTotalBox2" style="display:none;">
-            <span>💰 إجمالي طلبك لحد دلوقتي</span>
-            <strong id="liveTotalVal2">0 ج</strong>
-          </div>
-
-          <div class="step-nav">
-            <button class="btn-back" onclick="switchTab('size')">→&nbsp;رجوع</button>
             <button class="btn-primary" onclick="attemptSwitchTab('shipping')">التالي: الشحن&nbsp;←</button>
           </div>
         </div>
@@ -2319,7 +2050,7 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
           <div class="order-summary">
             <h4 style="margin-bottom: 14px; color: var(--primary-dark);">📦 ملخص طلبك</h4>
             <div class="sum-row"><span>عدد القطع</span><span class="val" id="sumPieces">0</span></div>
-            <div class="sum-row"><span>سعر القطعة</span><span class="val" id="sumPiecePrice">300 ج</span></div>
+            <div class="sum-row"><span>سعر القطعة</span><span class="val" id="sumPiecePrice">330 ج</span></div>
             <div class="sum-row"><span>إجمالي البالطو بتاعك</span><span class="val" id="sumProducts">0 ج</span></div>
             <div class="sum-row" id="sumAddonRow" style="display:none;"><span>📔🏅 نوتة ومدالية (اختياري)</span><span class="val" id="sumAddon">0 ج</span></div>
             <div class="sum-row" id="sumSpecialAddonRow" style="display:none;"><span>📔🏅 نوتة ومدالية (مقاس خاص)</span><span class="val" id="sumSpecialAddon">0 ج</span></div>
@@ -2333,7 +2064,7 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
           </div>
 
           <div class="step-nav" style="margin-top: 20px;">
-            <button class="btn-back" onclick="switchTab('product')">→&nbsp;رجوع</button>
+            <button class="btn-back" onclick="switchTab('size')">→&nbsp;رجوع</button>
             <button class="btn-primary" onclick="attemptSwitchTab('payment')">التالي: الدفع&nbsp;←</button>
           </div>
         </div>
@@ -2371,7 +2102,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 
           <div class="final-order-review" id="finalOrderReview">
             <h4>🧾 راجع طلبك قبل الإرسال</h4>
-            <div class="frow"><span class="flabel">🎨 التصميم</span><span class="fval" id="revDesign">—</span><button type="button" class="btn-edit-row" onclick="switchTab('product')">✏️ عدّل</button></div>
             <div class="frow"><span class="flabel">📏 المقاس</span><span class="fval" id="revSize">—</span><button type="button" class="btn-edit-row" onclick="switchTab('size')">✏️ عدّل</button></div>
             <div class="frow"><span class="flabel">🔢 الكمية</span><span class="fval" id="revQty">—</span><button type="button" class="btn-edit-row" onclick="switchTab('size')">✏️ عدّل</button></div>
             <div class="frow"><span class="flabel">🚚 نوع الشحن</span><span class="fval" id="revShipping">—</span><button type="button" class="btn-edit-row" onclick="switchTab('shipping')">✏️ عدّل</button></div>
@@ -2433,7 +2163,7 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
           </tr>
           <tr>
             <td style="padding:12px; font-size:13px; font-weight:700; color:var(--primary-dark);">السعر</td>
-            <td style="padding:12px; text-align:center; font-size:14px; font-weight:800; color:var(--accent-dark);">300 ج (وينزل لـ 250 ج)</td>
+            <td style="padding:12px; text-align:center; font-size:14px; font-weight:800; color:var(--accent-dark);">330 ج (وينزل لـ 280 ج)</td>
             <td style="padding:12px; text-align:center; font-size:13px; color:var(--muted);">أعلى عادةً لنفس الخامة</td>
           </tr>
         </tbody>
@@ -2453,13 +2183,16 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
     </div>
     <div class="faq-list" id="faqList">
       <div class="faq-item"><button class="faq-q">إيه هو أقل عدد ممكن أطلبه؟</button><div class="faq-a"><p>مفيش حد أدنى — تقدر تطلب بالطو واحد بس بالتصميم والاسم اللي تحبه.</p></div></div>
-      <div class="faq-item"><button class="faq-q">إزاي أطلب تصميم خاص؟</button><div class="faq-a"><p>بص على معرض التصاميم أو ابعتلنا أي صورة على الواتساب وإحنا هنعملك بالطو شبهها بالظبط.</p></div></div>
+      <div class="faq-item"><button class="faq-q">السعر عندكم بيتفرق عن أماكن تانية؟</button><div class="faq-a"><p>أيوه، بنقدملك نفس خامة الجابردين والتطريز الاحترافي بسعر أقل من المنافسين، لأننا بنبيع أونلاين من غير مصاريف محل.</p></div></div>
+      <div class="faq-item"><button class="faq-q">بتلتزموا بميعاد التسليم المتفق عليه؟</button><div class="faq-a"><p>أيوه، بنلتزم بالمواعيد المتفق عليها، ولو حصل أي ظرف استثنائي بيأخر التسليم بنكون على تواصل معاك أول بأول من غير ما نسيبك مستني من غير خبر.</p></div></div>
+      <div class="faq-item"><button class="faq-q">التواصل والرد بيكون سريع؟</button><div class="faq-a"><p>أيوه، بنرد على رسايل الواتساب في نفس اليوم على أي استفسار قبل أو بعد الطلب.</p></div></div>
+      <div class="faq-item"><button class="faq-q">إزاي أطلب تصميم خاص؟</button><div class="faq-a"><p>ابعتلنا أي صورة على الواتساب وإحنا هنعملك بالطو شبهها بالظبط.</p></div></div>
       <div class="faq-item"><button class="faq-q">إيه مدة التنفيذ والتوصيل؟</button><div class="faq-a"><p>التفصيل من 3 لـ 5 أيام. الشحن السريع يوم ليومين، والاقتصادي من 3 لـ 7 أيام.</p></div></div>
       <div class="faq-item"><button class="faq-q">إزاي بدفع؟</button><div class="faq-a"><p>الدفع بالكامل كاش عند استلام الأوردر، من غير أي عربون مقدم.</p></div></div>
       <div class="faq-item"><button class="faq-q">لو المقاس مجاش معايا أعمل إيه؟</button><div class="faq-a"><p>استخدم دليل المقاسات أو ابعتلنا الطول والوزن على الواتساب وهنساعدك تختار المقاس الصح.</p></div></div>
       <div class="faq-item"><button class="faq-q">إيه نوع الخامة بالظبط؟ وهل بتتحمل الغسيل؟</button><div class="faq-a"><p>الخامة <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">جابردين أصلية 100%، مش بوليستر</mark> — سميكة ومش شفافة ومريحة في اللبس. والطباعة/التطريز ثابت ومبيروحش مع الغسيل المتكرر.</p></div></div>
       <div class="faq-item"><button class="faq-q">إيه نوع الطباعة المستخدمة وهل هتفضل زي ما هي؟</button><div class="faq-a"><p>بنستخدم طباعة/تطريز عالي الجودة مخصص للخامات القماشية، بيفضل واضح وثابت حتى بعد غسلات متكررة من غير تشقق أو بهتان.</p></div></div>
-      <div class="faq-item"><button class="faq-q">اخترت تصميم من المعرض بس عايز أعدل فيه، أعمل إيه؟</button><div class="faq-a"><p>سهلة — ابعتلنا التعديل اللي عايزه على الواتساب قبل ما نبدأ التنفيذ وهنظبطلك التصميم زي ما عايز.</p></div></div>
+      <div class="faq-item"><button class="faq-q">اخترت تصميم بس عايز أعدل فيه، أعمل إيه؟</button><div class="faq-a"><p>سهلة — ابعتلنا التعديل اللي عايزه على الواتساب قبل ما نبدأ التنفيذ وهنظبطلك التصميم زي ما عايز.</p></div></div>
       <div class="faq-item"><button class="faq-q">لو حصل عيب في التصنيع أو الطباعة، إيه سياسة الاستبدال؟</button><div class="faq-a"><p><mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">ضمان حتى 4 غسلات</mark> بيغطيك بالكامل — لو الطباعة راحت أو اتبهتت <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">حتى لو غسلته 3 أو 4 مرات</mark>، هنستبدل البالطو مجانًا. وكمان لو المقاس مجاش معاك أو حسيت إن الخامة مش عاجباك، <mark style="background:none; color:inherit; font-weight:700; text-decoration:underline; text-underline-offset:3px;">تقدر ترجعه حتى لو بعد أول غسلة</mark>، تواصل معنا على الواتساب وهنحلها فورًا.</p></div></div>
       <div class="faq-item"><button class="faq-q">بتوصلوا لكل المحافظات؟</button><div class="faq-a"><p>نعم، بنوصل لكل محافظات مصر لحد باب البيت.</p></div></div>
     </div>
@@ -2476,8 +2209,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 <div class="site-view" id="view-track">
 <div class="view-nav-bar">
   <button type="button" onclick="switchView('home')">🏠 الرئيسية</button>
-  <button type="button" onclick="switchView('gallery')">🖼️ المعرض</button>
-  <button type="button" class="btn-order-page-nav" onclick="switchView('order')">📃 صفحة الطلب</button>
   <button type="button" class="btn-order-highlight" onclick="goToOrderFormAndFocus()">📝 اطلب الآن</button>
 </div>
 <section class="hero" style="padding: 40px 16px 20px;">
@@ -2669,31 +2400,9 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
   </div>
 </section>
 </div>
-<div class="site-view" id="view-gallery">
-<div class="view-nav-bar">
-  <button type="button" onclick="switchView('home')">🏠 الرئيسية</button>
-  <button type="button" class="current" disabled>🖼️ المعرض</button>
-  <button type="button" class="btn-order-page-nav" onclick="switchView('order')">📃 صفحة الطلب</button>
-  <button type="button" class="btn-order-highlight" onclick="goToOrderFormAndFocus()">📝 اطلب الآن</button>
-</div>
-<section id="gallery" style="padding-top: 40px;">
-  <div class="container">
-    <div class="section-head">
-      <span class="tag">🖼️ معرض المنتجات</span>
-      <h3>نماذج من تصاميمنا</h3>
-      <p>دي جزء بسيط من التصاميم المتاحة عندنا، تصفحها واختار اللي يعجبك، ولو عايز تشوف أكتر ابعتلنا على الواتساب</p>
-      <p class="gallery-note" style="max-width: 480px; margin: 14px auto 0;">عجبك تصميم؟ اطلب دلوقتي وهتلاقيه في صفحة الطلب ✅ ولو عندك تصميم تاني أو حابب تشوف تصاميم أكتر، هتلاقيها هناك برضو</p>
-    </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </div>
-</section>
-
-</div>
 <div class="site-view" id="view-story">
 <div class="view-nav-bar">
   <button type="button" onclick="switchView('home')">🏠 الرئيسية</button>
-  <button type="button" onclick="switchView('gallery')">🖼️ المعرض</button>
-  <button type="button" class="btn-order-page-nav" onclick="switchView('order')">📃 صفحة الطلب</button>
   <button type="button" class="btn-order-highlight" onclick="goToOrderFormAndFocus()">📝 اطلب الآن</button>
 </div>
 <section id="brandStory" style="padding: 48px 0 60px;">
@@ -2737,7 +2446,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
     <div class="footer-col">
       <h5>روابط سريعة</h5>
       <a href="#" onclick="switchView('home'); return false;">الرئيسية</a>
-      <a href="#" onclick="switchView('gallery'); return false;">المعرض</a>
       <a href="#" onclick="switchView('order'); return false;">صفحة الطلب</a>
       <a href="#" onclick="goToOrderFormAndFocus(); return false;">اطلب الآن</a>
       <a href="#" onclick="switchView('order', 'faq'); return false;">الأسئلة الشائعة</a>
@@ -2811,13 +2519,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
   <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-2.9h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.75-1.6 1.53v1.87H16l-.4 2.9h-2.1v7A10 10 0 0 0 22 12z"/></svg>
 </a>
 
-<div class="floating-order-btn" id="floatingOrderBtn">
-  <div class="two-btns">
-    <button type="button" class="btn-order-highlight-fab" onclick="goToOrderFormAndFocus()">📝 اطلب الآن 🚀</button>
-    <button type="button" class="btn-track-page" onclick="switchView('track')">🔎 فين طلبي؟</button>
-  </div>
-</div>
-
 <div class="toast" id="toast">✅ تم النسخ!</div>
 
 <div class="modal" id="orderConfirmModal">
@@ -2837,9 +2538,11 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 
     <button type="button" class="submit-btn" style="margin-bottom: 10px;" onclick="closeModal('orderConfirmModal'); switchView('track');">🔎 تتبع الطلب دلوقتي</button>
 
+    <a id="orderConfirmWaLink" href="#" target="_blank" rel="noopener" style="display:block; background:#25D366; color:#fff; border-radius: 12px; padding: 12px; margin-bottom: 14px; font-weight: 800; font-size: 14px; text-decoration:none;">📲 لو الواتساب مفتحش لوحده، دوس هنا يفتحلك</a>
+
     <div style="background:#fff8ec; border: 1px solid var(--accent); border-radius: 14px; padding: 14px; margin-bottom: 14px;">
       <p style="font-size: 13px; font-weight: 700; color: var(--primary-dark); margin-bottom: 8px;">🎁 اطلب مع صحابك واقتسموا السعر الأقل!</p>
-      <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">3 بالطو بـ 280 ج للقطعة، و10+ بـ 250 ج بس. شارك اللينك مع شلتك دلوقتي:</p>
+      <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">3 بالطو بـ 310 ج للقطعة، و10+ بـ 280 ج بس. شارك اللينك مع شلتك دلوقتي:</p>
       <button type="button" onclick="zbqShareOrder()" style="background: var(--accent); color: #1a2e2a; border:none; border-radius: 20px; padding: 9px 16px; font-weight: 800; font-size: 13px; cursor:pointer;">📤 شارك مع صحابك</button>
     </div>
 
@@ -2848,46 +2551,6 @@ body.has-floating-order .zbq-chat-fab { bottom: 84px; }
 </div>
 
 
-<div class="modal" id="pieceDesignModal">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="إغلاق النافذة" onclick="closeModal('pieceDesignModal')">✕</button>
-    <h3 style="color: var(--primary-dark); margin-bottom: 14px;">🎨 اختار تصميم <span id="pieceDesignModalLabel"></span></h3>
-    <div class="design-picker-grid" id="pieceDesignPickerGrid"></div>
-  </div>
-</div>
-<div class="modal" id="designZoomModal">
-  <div class="modal-content" style="max-width: 480px; text-align: center;">
-    <button class="modal-close" aria-label="إغلاق النافذة" onclick="closeModal('designZoomModal')">✕</button>
-    <div class="modal-img-wrap" id="designZoomImgWrap">
-      <img id="designZoomImg" src="" alt="" draggable="false" style="width: 100%; max-height: 55vh; object-fit: contain; background: #f0f5f3; border-radius: 14px; margin-bottom: 14px; -webkit-user-drag: none; user-select: none;" loading="lazy">
-      <button type="button" class="gallery-lb-nav gallery-lb-prev" id="designZoomPrevBtn" aria-label="السابق" onclick="designZoomStep(-1)">‹</button>
-      <button type="button" class="gallery-lb-nav gallery-lb-next" id="designZoomNextBtn" aria-label="التالي" onclick="designZoomStep(1)">›</button>
-    </div>
-    <div class="gallery-lb-counter" id="designZoomCounter"></div>
-    <h4 id="designZoomTitle" style="color: var(--primary-dark); margin-bottom: 16px;"></h4>
-    <button class="btn-primary" style="width: 100%;" onclick="confirmZoomDesign()">➕ إضافة التصميم ده</button>
-    <button class="btn-ghost" style="width: 100%; margin-top: 10px; background: #eef5f3; color: var(--primary-dark); border: none;" onclick="downloadZoomDesign()">⬇️ تحميل الصورة</button>
-  </div>
-</div>
-<div class="modal" id="imgModal">
-  <div class="modal-content">
-    <button class="modal-close" aria-label="إغلاق النافذة" onclick="closeModal('imgModal')">✕</button>
-    <div class="modal-img-wrap" id="modalImgWrap">
-      <img id="modalImg" src="" alt="" draggable="false" style="border-radius: 12px; margin-bottom: 16px;" loading="lazy">
-      <button type="button" class="gallery-lb-nav gallery-lb-prev" id="modalPrevBtn" aria-label="السابق" onclick="modalGalleryStep(-1)">‹</button>
-      <button type="button" class="gallery-lb-nav gallery-lb-next" id="modalNextBtn" aria-label="التالي" onclick="modalGalleryStep(1)">›</button>
-    </div>
-    <div class="gallery-lb-counter" id="modalCounter"></div>
-    <h3 id="modalTitle" style="color: var(--primary-dark); margin-bottom: 10px;"></h3>
-    <p id="modalDesc" style="color: var(--muted); margin-bottom: 16px;"></p>
-    <div style="display: flex; flex-direction: column; gap: 10px;">
-      <div style="display: flex; gap: 10px;">
-        <button class="btn-ghost" id="modalDownload" style="flex: 1; background: #eef5f3; color: var(--primary-dark); border: none;">⬇️ تحميل الصورة</button>
-        <button class="btn-ghost" id="modalWa" style="flex: 1; background: #25D366; color: #fff; border: none; display:flex; align-items:center; justify-content:center; gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.98.578 3.824 1.573 5.375L2 22l4.735-1.545A9.947 9.947 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.75 0-3.37-.51-4.74-1.38l-.34-.21-2.81.92.93-2.74-.22-.35A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg> ابعت على الواتساب</button>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="modal" id="sizeGuideModal">
   <div class="modal-content" style="max-width: 520px;">
     <button class="modal-close" aria-label="إغلاق النافذة" onclick="closeModal('sizeGuideModal')">✕</button>
@@ -2921,46 +2584,13 @@ window.addEventListener('load', syncHeaderHeight);
 window.addEventListener('resize', syncHeaderHeight);
 document.addEventListener('DOMContentLoaded', syncHeaderHeight);
 
-// بيسجل التصميم اللي العميل اختاره من صفحة المعرض، عشان نضيفه تلقائي لأول قطعة فاضية في نموذج الطلب
-let pendingGalleryPick = null;
-
-// بيتنادى من كارت المعرض لما العميل يدوس "اختار التصميم ده"
-function pickGalleryDesign(i) {
-  const item = galleryItems[i];
-  if (!item) return;
-  pendingGalleryPick = { index: i, title: item.title, img: item.img };
-  showToast('✅ تم اختيار التصميم، هيتضاف تلقائي في نموذج الطلب');
-  switchView('order', 'piecesGroup');
-}
-
-// بيحط التصميم اللي العميل اختاره من المعرض على أول قطعة لسه من غير تصميم، لو لقى قطع جاهزة
-function applyPendingGalleryPick() {
-  if (!pendingGalleryPick) return;
-  const piece = state.pieces.find(p => !p.design);
-  if (!piece) {
-    pendingGalleryPick = null;
-    if (state.pieces.length === 0) {
-      showToast('محتاج تحدد مقاساتك الأول من نموذج الطلب، وبعدين ترجع تختار التصميم ده 👇', 4500);
-    } else {
-      showToast('كل قطعك متصممة بالفعل ✅ — لو عايز تغيّر تصميم قطعة معينة، افتح نموذج الطلب واختار من هناك', 4500);
-    }
-    return;
-  }
-  piece.design = String(pendingGalleryPick.index);
-  piece.designTitle = pendingGalleryPick.title;
-  piece.designImg = pendingGalleryPick.img;
-  piece.designIndex = pendingGalleryPick.index;
-  pendingGalleryPick = null;
-  renderPiecesList();
-  showToast('✅ تم إضافة الصورة في نموذج الطلب');
-}
 
 // بيتحكم في إظهار/إخفاء "الصفحات" (أقسام الموقع) من غير ما نعمل تنقل حقيقي بين ملفات
 function switchView(view, anchorId) {
   document.querySelectorAll('.site-view').forEach(v => v.classList.remove('active'));
   const target = document.getElementById('view-' + view);
   if (target) target.classList.add('active');
-  document.getElementById('mainNav')?.classList.remove('mobile-open');
+  updateHeaderNavActive(view);
 
   // Meta Pixel: تتبّع PageView يدوي لكل تنقل بين الصفحات (SPA)
   if (typeof fbq === 'function') {
@@ -2976,7 +2606,6 @@ function switchView(view, anchorId) {
     gtag('event', 'begin_checkout');
   }
 
-  if (view === 'order') applyPendingGalleryPick();
   updateFloatingOrderBtn();
   if (anchorId) {
     setTimeout(() => {
@@ -2990,13 +2619,21 @@ function switchView(view, anchorId) {
 
 // زرار "اطلب الآن" العائم — بيظهر بس بعد ما اليوزر ينزل تحت شوية، وبيختفي وهو أصلاً في صفحة الطلب
 // زرار "اطلب الآن" العائم — بيودي لنموذج الطلب وبعد ما الصفحة توصل، بيفتح الكيبورد تلقائي على حقل "الاسم الكامل"
+// بتنوّر زرار الصفحة اللي العميل واقف فيها دلوقتي في الهيدر، والباقي بيرجعوا شفافين
+function updateHeaderNavActive(view) {
+  const map = { home: 'headerBtnHome', order: 'headerBtnOrder', track: 'headerBtnTrack' };
+  ['headerBtnHome', 'headerBtnOrder', 'headerBtnTrack'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', map[view] === id);
+  });
+}
+
 function goToOrderFormAndFocus() {
   switchView('order');
   setTimeout(() => {
     const nameField = document.getElementById('fullName');
     if (nameField) {
       nameField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      nameField.focus();
     }
   }, 300);
 }
@@ -3802,26 +3439,6 @@ async function adminUpdateStatus() {
   btn.innerHTML = originalHTML;
 }
 
-const galleryItems = [
-  { title: "د. مازن إبراهيم", desc: "تصميم جمجمة فني بخنجر", badge: "🔥 مميز", cat: "featured", img: "assets/images/extracted/img-13-7dddb030.webp" },
-  { title: "د. أمنية عاطف", desc: "تصميم حروف طبي بورد وزهور مع اسم مطرز", badge: "⭐ جديد", cat: "new", img: "assets/images/extracted/img-14-68f54706.webp" },
-  { title: "د. أحمد علي", desc: "تصميم سرنجة طبية", badge: "", cat: "classic", img: "assets/images/extracted/img-15-588dd314.webp" },
-  { title: "د. مرام يوسف", desc: "ميكروسكوب مع ورود", badge: "🌸 نسائي", cat: "women", img: "assets/images/extracted/img-16-ac0a76d9.webp" },
-  { title: "د. عبدالله أسامة", desc: "تصميم شخصية كلاسيك", badge: "", cat: "classic", img: "assets/images/extracted/img-17-dc172813.webp" },  { title: "د. أسماء مالك", desc: "تصميم كيميائي فني", badge: "⚡ تقني", cat: "tech", img: "assets/images/extracted/img-18-fa0a4ad4.webp" },
-  { title: "جامعة بنها", desc: "طباعة خلفية", badge: "🎓 جامعي", cat: "university", img: "assets/images/extracted/img-19-dcb320d7.webp" },
-  { title: "جامعة عين شمس", desc: "طباعة خلفية", badge: "🎓 جامعي", cat: "university", img: "assets/images/extracted/img-20-9d54b7f1.webp" },
-  { title: "جامعة القاهرة", desc: "طباعة خلفية", badge: "🎓 جامعي", cat: "university", img: "assets/images/extracted/img-21-465a8d82.webp" },
-  { title: "جامعة الإسكندرية", desc: "طباعة خلفية", badge: "🎓 جامعي", cat: "university", img: "assets/images/extracted/img-22-1b11242f.webp" },  { title: "د. مريم أيمن", desc: "تصميم إلكتروني تقني", badge: "⚡ تقني", cat: "tech", img: "assets/images/extracted/img-23-3d6a11fe.webp" },
-  { title: "د. عصام السيد", desc: "تجربة كيميائية كرتونية", badge: "", cat: "classic", img: "assets/images/extracted/img-24-74141a9f.webp" },
-  { title: "د. ياسمين أحمد", desc: "أرنب عالم كيميائي", badge: "🐰 كيوت", cat: "cute", img: "assets/images/extracted/img-25-e27ca864.webp" },
-  { title: "د. فاتن عماد", desc: "تصميم ذرة علمي", badge: "", cat: "classic", img: "assets/images/extracted/img-26-e74e00db.webp" },
-  { title: "د. آية علي", desc: "تصميم دكتور كرتوني بتقرير طبي", badge: "", cat: "classic", img: "assets/images/extracted/img-27-68187286.webp" },
-  { title: "د. خالد إسماعيل", desc: "تصميم Trust me I'm a dentist", badge: "", cat: "classic", img: "assets/images/extracted/img-28-b821c404.webp" },
-  { title: "د. مريم حمزة", desc: "تصميم فني فنتازي مميز", badge: "🔥 مميز", cat: "featured", img: "assets/images/extracted/img-29-3fb773d0.webp" },
-  { title: "د. فاطمة داود", desc: "تصميم طب أسنان مع دعاء", badge: "", cat: "classic", img: "assets/images/extracted/img-30-578bb456.webp" },
-  { title: "د. أحمد جمال", desc: "تصميم طب كلى مع دعاء", badge: "", cat: "classic", img: "assets/images/extracted/img-31-303eef91.webp" },
-  { title: "د. منة رضا", desc: "تصميم صيدلة كيوت مع دعاء", badge: "🌸 نسائي", cat: "women", img: "assets/images/extracted/img-32-840dd3b1.webp" },
-];
 
 // كل تقييم ممكن ياخد "proof" (رابط صورة/سكرين شوت من واتساب أو ماسنجر) لاحقًا
 // من غير أي تعديل في الكود — لو الحقل فاضل null هيتعرض التقييم عادي من غير صورة.
@@ -3958,12 +3575,10 @@ function renderWaTestimonials() {
   track.innerHTML = waTestimonials.map((t, i) => `
     <div class="wa-card" data-index="${i}">
       <div class="wa-img-wrap">
-        <img src="${t.img}" alt="تقييم عميل حقيقي - ${t.name}" loading="lazy">
+        <img src="${t.img}" alt="تقييم عميل حقيقي" loading="lazy">
         <div class="wa-zoom"><span>🔍 اضغط للتكبير</span></div>
       </div>
       <div class="wa-foot">
-        <div class="wa-avatar">${t.name.trim().charAt(0)}</div>
-        <div class="wa-name">${t.name}</div>
         <div class="wa-badge">✅ فيسبوك</div>
       </div>
     </div>
@@ -4031,19 +3646,21 @@ const SPECIAL_PRICING_SIZES = ['4XL', '5XL'];
 // خصم العميل القديم لكل قطعة عادية (مش داخل فيه مقاسات السعر الخاص 4XL/5XL)
 
 // عرض اختياري: البالطو + نوتة + مدالية بنفس التصميم — سعر ثابت شامل الكل (مش فوق سعر البالطو العادي)
-const NOTEBOOK_MEDAL_PRICE = 350;
+const NOTEBOOK_MEDAL_PRICE = 380;
 // لو العميل اختار مقاس خاص (4XL/5XL) + عرض النوتة والمدالية: مش بنحسب سعر البالطو خالص (بيتحدد خاص على الواتساب)،
 // وبنضيف بس 50 جنيه ثابتة لسعر النوتة والمدالية نفسهم
-const SPECIAL_SIZE_ADDON_PRICE = 50;
+const SPECIAL_SIZE_ADDON_PRICE = 80;
 
 const state = {
-  material: 'gaberdine', piecePrice: 300,
+  material: 'gaberdine', piecePrice: 330,
+  // اختيار العميل الإجباري لعرض النوتة والمدالية: '' (لسه ملهاش اختيار) / 'yes' / 'no'
+  notebookMedalOfferChoice: '',
   sizes: { S: 0, M: 0, L: 0, XL: 0, XXL: 0, '3XL': 0, '4XL': 0, '5XL': 0 },
   sizePrices: { S: 0, M: 0, L: 0, XL: 0, XXL: 0, '3XL': 0, '4XL': 0, '5XL': 0 },
   shipping: '', // لازم العميل يختار بنفسه، مفيش اختيار افتراضي
   deliveryLocation: '', // 'home' لحد البيت، أو 'post' استلام من مكتب البريد — برضه مفيش افتراضي
   // كل قطعة (بالطو) ليها تصميم واسم مطبوع مستقل، مش تصميم واحد للطلب كله
-  // { size, design, designTitle, designImg, designIndex, printName }
+  // { size, height, weight, addNotebookMedal }
   pieces: [],
   activePieceIndex: null,
   // returningCheckStatus: 'idle' (لسه ملهاش معنى) / 'checking' (بنستنى رد الشيت) / 'confirmed' / 'notfound'
@@ -4063,8 +3680,7 @@ const DRAFT_STORAGE_KEY = 'zbq_order_draft_v1';
 const DRAFT_MAX_AGE_MS = 1 * 60 * 1000;
 const DRAFT_FORM_FIELD_IDS = [
   'fullName', 'phone', 'university', 'universityOther', 'faculty', 'facultyOther',
-  'governorate', 'governorateOther', 'year', 'addrCenter', 'addrVillage', 'addrStreet',
-  'addrLandmark', 'designDesc'
+  'governorate', 'governorateOther', 'year', 'address'
 ];
 
 function collectDraftData() {
@@ -4080,6 +3696,7 @@ function collectDraftData() {
     sizes: state.sizes,
     people: state.people,
     pieces: state.pieces,
+    notebookMedalOfferChoice: state.notebookMedalOfferChoice,
     savedAt: Date.now()
   };
 }
@@ -4164,16 +3781,6 @@ function restoreDraft() {
       const el = document.getElementById(id);
       if (el) el.dispatchEvent(new Event('change'));
     });
-    const hiddenAddr = document.getElementById('address');
-    if (hiddenAddr) hiddenAddr.dispatchEvent(new Event('input'));
-
-    // بيبعت حدث "input" على خانات العنوان الفرعية (المركز/الحي/الشارع/العلامة) عشان
-    // تشغّل تجميع حقل address المخفي تاني بعد الريفريش، وإلا الحقول بتظهر متملية
-    // بس address بيفضل فاضي فيرجع يطلب "اكتب" مع إن العميل كاتب كل حاجة
-    ['addrCenter', 'addrVillage', 'addrStreet', 'addrLandmark'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el && el.value) el.dispatchEvent(new Event('input'));
-    });
 
     // بيبعت حدث "input" على الاسم والتليفون عشان فحص "عميل قديم؟" (setupReturningCustomerCheck)
     // يبدأ لوحده فورًا بعد الريفريش، بدل ما يفضل واقف على idle لحد ما العميل يكتب حرف بنفسه
@@ -4196,6 +3803,10 @@ function restoreDraft() {
   if (saved.sizes) Object.assign(state.sizes, saved.sizes);
   if (Array.isArray(saved.people) && saved.people.length) state.people = saved.people;
   if (Array.isArray(saved.pieces)) state.pieces = saved.pieces;
+  if (saved.notebookMedalOfferChoice === 'yes' || saved.notebookMedalOfferChoice === 'no') {
+    state.notebookMedalOfferChoice = saved.notebookMedalOfferChoice;
+  }
+  syncNotebookMedalOfferToggle();
 }
 
 // بتحفظ أي تغيير في حقول بيانات العميل (الاسم، الهاتف، العنوان...) أول بأول
@@ -4212,8 +3823,6 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) { /* admin route skipped */ }
   try { setupReturningCustomerCheck(); } catch (e) { /* setupReturningCustomerCheck skipped: not on this page */ }
   try { restoreDraft(); } catch (e) { /* restoreDraft skipped: not on this page */ }
-  try { renderGallery(); } catch (e) { /* renderGallery skipped: not on this page */ }
-  try { renderFilters(); } catch (e) { /* renderFilters skipped: not on this page */ }
   try { renderReviews(); } catch (e) { /* renderReviews skipped: not on this page */ }
   try { fetchSharedReviews(); } catch (e) { /* fetchSharedReviews skipped: not on this page */ }
   try { initStarPicker(); } catch (e) { /* initStarPicker skipped: not on this page */ }
@@ -4223,7 +3832,6 @@ document.addEventListener('DOMContentLoaded', () => {
   try { setupTabs(); } catch (e) { /* setupTabs skipped: not on this page */ }
   try { setupMaterialChoice(); } catch (e) { /* setupMaterialChoice skipped: not on this page */ }
   try { setupShippingChoice(); } catch (e) { /* setupShippingChoice skipped: not on this page */ }
-  try { setupPieceDesignPicker(); } catch (e) { /* setupPieceDesignPicker skipped: not on this page */ }
   try { updateSummary(); } catch (e) { /* updateSummary skipped: not on this page */ }
   try { setupFAQ(); } catch (e) { /* setupFAQ skipped: not on this page */ }
   try { loadLogoAndHero(); } catch (e) { /* loadLogoAndHero skipped: not on this page */ }
@@ -4236,6 +3844,7 @@ document.addEventListener('DOMContentLoaded', () => {
   try { setupAbandonedLeadCapture(); } catch (e) { /* setupAbandonedLeadCapture skipped: not on this page */ }
   try { renderPiecesList(); } catch (e) { /* renderPiecesList skipped: not on this page */ }
   try { setupRemoteGovernorateNote(); } catch (e) { /* setupRemoteGovernorateNote skipped: not on this page */ }
+  try { updateHeaderNavActive('home'); } catch (e) { /* updateHeaderNavActive skipped: not on this page */ }
 });
 
 // ————————————————————————————————————————————————
@@ -4526,267 +4135,7 @@ function loadLogoAndHero() {
 }
 
 
-const categoryLabels = {
-  all: 'الكل',
-  featured: '🔥 مميز',
-  new: '⭐ جديد',
-  women: '🌸 نسائي',
-  university: '🎓 جامعي',
-  tech: '⚡ تقني',
-  cute: '🐰 كيوت',
-  classic: '🎨 كلاسيك'
-};
-let currentFilter = 'all';
 
-function renderFilters() {
-  const box = document.getElementById('galleryFilters');
-  if (!box) return;
-  const catsPresent = Array.from(new Set(galleryItems.map(it => it.cat || 'classic')));
-  const order = ['all', ...catsPresent.filter(c => categoryLabels[c])];
-  box.innerHTML = order.map(cat => `
-    <button class="filter-btn ${cat === currentFilter ? 'active' : ''}" onclick="setGalleryFilter('${cat}')">${categoryLabels[cat] || cat}</button>
-  `).join('');
-}
-
-function setGalleryFilter(cat) {
-  currentFilter = cat;
-  renderFilters();
-  renderGallery();
-}
-
-function renderGallery() {
-  const grid = document.getElementById('galleryGrid');
-  if (!grid) return;
-  const items = galleryItems
-    .map((item, i) => ({ ...item, i }))
-    .filter(item => currentFilter === 'all' || (item.cat || 'classic') === currentFilter);
-  const countEl = document.getElementById('galleryCount');
-  if (countEl) countEl.textContent = `عرض ${items.length} تصميم${items.length === 1 ? '' : 'ات'}`;
-  grid.innerHTML = items.map((item) => `
-    <div class="gallery-item">
-      <img class="gallery-img" src="${item.img}" alt="${item.title}" loading="lazy" style="cursor: zoom-in;" onclick="openImageModal(${item.i})" onload="this.classList.add('img-loaded')">
-      <div class="gallery-info">
-        <div>
-          <div class="title">${item.title}</div>
-          <div class="sub">${item.desc}</div>
-        </div>
-        <div class="gallery-actions">
-          <button class="btn-icon" onclick="openImageModal(${item.i})" title="عرض">👁️</button>
-          <button class="btn-icon" onclick="downloadImage(${item.i})" title="تحميل">⬇️</button>
-          <button class="btn-icon wa" onclick="sendImageWA(${item.i})" title="ابعت على واتساب"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 1.98.578 3.824 1.573 5.375L2 22l4.735-1.545A9.947 9.947 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18c-1.75 0-3.37-.51-4.74-1.38l-.34-.21-2.81.92.93-2.74-.22-.35A7.94 7.94 0 0 1 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.57-.01-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg></button>
-        </div>
-      </div>
-    </div>
-  `).join('') + `
-    <div class="upload-cta" onclick="sendCustomImage()">
-      <div class="icon">📤</div>
-      <h4>لو في تصميم في دماغك ابعتهولنا</h4>
-      <p>لو معندكش، متاح عندنا أكتر من 400 تصميم اختار بينهم</p>
-    </div>
-  `;
-}
-
-const CUSTOM_DESIGN_THUMB = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect fill='%23eef5f3' width='300' height='300' rx='16'/%3E%3Ctext x='150' y='150' text-anchor='middle' font-size='60' fill='%23d4a84b'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E`;
-const MORE_DESIGN_THUMB = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Crect fill='%23eef5f3' width='300' height='300' rx='16'/%3E%3Ctext x='150' y='150' text-anchor='middle' font-size='60' fill='%230a5c4f'%3E%F0%9F%96%BC%EF%B8%8F%3C/text%3E%3C/svg%3E`;
-
-// شبكة اختيار التصميم بقت جوا مودال بيتفتح لكل قطعة على حدة (مش تصميم واحد للطلب كله)
-function setupPieceDesignPicker() {
-  const grid = document.getElementById('pieceDesignPickerGrid');
-  if (!grid) return;
-
-  const cards = galleryItems.map((item, i) => `
-    <div class="design-pick-card" data-design="${item.title}" data-index="${i}">
-      <div class="design-pick-img-wrap">
-        <img src="${item.img}" alt="${item.title}" loading="lazy" onload="this.classList.add('img-loaded')">
-        <button type="button" class="design-select-circle" aria-label="اختار التصميم ده"></button>
-      </div>
-      <div class="design-pick-name">${item.title}</div>
-    </div>
-  `).join('') + `
-    <div class="design-pick-card" data-design="custom">
-      <div class="design-pick-img-wrap">
-        <img src="${CUSTOM_DESIGN_THUMB}" alt="تصميم مخصص" loading="lazy">
-        <button type="button" class="design-select-circle" aria-label="اختار التصميم ده"></button>
-      </div>
-      <div class="design-pick-name">🎯 تصميم مخصص</div>
-    </div>
-    <div class="design-pick-card" data-design="more">
-      <div class="design-pick-img-wrap">
-        <img src="${MORE_DESIGN_THUMB}" alt="تصاميم تانية" loading="lazy">
-        <button type="button" class="design-select-circle" aria-label="اختار التصميم ده"></button>
-      </div>
-      <div class="design-pick-name">🖼️ عايز أشوف تصاميم تانية</div>
-    </div>
-  `;
-  grid.innerHTML = cards;
-  // الدايرة اللي فوق كل تصميم: تحديد سريع للتصميم من غير ما تفتحلك الصورة الكبيرة
-  grid.querySelectorAll('.design-select-circle').forEach(circle => {
-    circle.addEventListener('click', e => {
-      e.stopPropagation();
-      selectPieceDesign(circle.closest('.design-pick-card'));
-    });
-  });
-  // الدوس على الصورة نفسها بيفتحها كبيرة الأول، ومنها العميل يضيف التصميم بدل ما يتحدد فورًا
-  grid.querySelectorAll('.design-pick-card').forEach(card => {
-    card.addEventListener('click', () => openDesignZoom(card));
-  });
-}
-
-// بيسجل التصميم اللي فاتحينه دلوقتي كبير عشان زرار "إضافة التصميم ده" يعرف يحدد أنهي كارت
-let zoomDesignCard = null;
-let designZoomPos = 0;
-
-// بيرجع كل كروت التصميم الموجودة في شبكة الاختيار الحالية (بنفس ترتيبها في الصفحة)
-function getDesignZoomCards() {
-  const grid = document.getElementById('pieceDesignPickerGrid');
-  return grid ? Array.from(grid.querySelectorAll('.design-pick-card')) : [];
-}
-
-// بيفتح صورة التصميم بحجم كبير قبل ما يتحدد، عشان العميل يتأكد كويس من التصميم قبل ما يضيفه
-function openDesignZoom(card) {
-  const cards = getDesignZoomCards();
-  const pos = cards.indexOf(card);
-  designZoomPos = pos === -1 ? 0 : pos;
-  renderDesignZoomImage();
-  document.getElementById('designZoomModal').classList.add('show');
-}
-
-// بيرسم صورة الكارت الحالي جوا المودال الكبير، وبيظبط أزرار التنقل والعداد حسب عدد التصاميم
-function renderDesignZoomImage() {
-  const cards = getDesignZoomCards();
-  if (!cards.length) return;
-  const card = cards[designZoomPos];
-  zoomDesignCard = card;
-  const img = card.querySelector('img');
-  const name = card.querySelector('.design-pick-name');
-  document.getElementById('designZoomImg').src = img ? img.src : '';
-  document.getElementById('designZoomImg').alt = img ? img.alt : '';
-  document.getElementById('designZoomTitle').textContent = name ? name.textContent : '';
-  const multi = cards.length > 1;
-  const counter = document.getElementById('designZoomCounter');
-  if (counter) counter.textContent = multi ? `${designZoomPos + 1} / ${cards.length}` : '';
-  const prevBtn = document.getElementById('designZoomPrevBtn');
-  const nextBtn = document.getElementById('designZoomNextBtn');
-  if (prevBtn) prevBtn.style.display = multi ? 'flex' : 'none';
-  if (nextBtn) nextBtn.style.display = multi ? 'flex' : 'none';
-}
-
-// بيتنقل بين التصاميم جوا المودال الكبير (زرار تالي/سابق أو سحب أو أسهم الكيبورد)
-function designZoomStep(dir) {
-  const cards = getDesignZoomCards();
-  if (!cards.length) return;
-  designZoomPos = (designZoomPos + dir + cards.length) % cards.length;
-  renderDesignZoomImage();
-}
-
-document.addEventListener('keydown', (e) => {
-  const dzModal = document.getElementById('designZoomModal');
-  if (!dzModal.classList.contains('show')) return;
-  if (e.key === 'Escape') closeModal('designZoomModal');
-  if (e.key === 'ArrowLeft') designZoomStep(-1);
-  if (e.key === 'ArrowRight') designZoomStep(1);
-});
-
-(function setupDesignZoomSwipe() {
-  const wrap = document.getElementById('designZoomImgWrap');
-  if (!wrap) return;
-  let startX = 0, startY = 0, dragging = false;
-  const threshold = 40;
-  wrap.addEventListener('pointerdown', (e) => {
-    startX = e.clientX; startY = e.clientY; dragging = true;
-  });
-  wrap.addEventListener('pointerup', (e) => {
-    if (!dragging) return;
-    dragging = false;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    if (Math.abs(dx) > threshold && Math.abs(dx) > Math.abs(dy)) {
-      designZoomStep(dx < 0 ? 1 : -1);
-    }
-  });
-  wrap.addEventListener('pointercancel', () => { dragging = false; });
-  wrap.addEventListener('pointerleave', () => { dragging = false; });
-})();
-
-// بيتنادى لما العميل يدوس "إضافة التصميم ده" في الصورة الكبيرة — هنا بس بيتحدد التصميم فعليًا
-function confirmZoomDesign() {
-  if (!zoomDesignCard) return;
-  selectPieceDesign(zoomDesignCard);
-  closeModal('designZoomModal');
-}
-
-// بيسمح للعميل يحمّل صورة التصميم اللي فاتحها كبيرة على جهازه
-function downloadZoomDesign() {
-  const img = document.getElementById('designZoomImg');
-  const title = document.getElementById('designZoomTitle');
-  if (!img || !img.src) return;
-  const a = document.createElement('a');
-  a.href = img.src;
-  a.download = `${(title && title.textContent ? title.textContent : 'design').trim()}.jpg`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  showToast('⬇️ بدأ التحميل');
-}
-
-// بيفتح مودال اختيار التصميم لقطعة معينة (بيبين المقاس بتاعها فوق عشان العميل يعرف بيختار لمين)
-function openPieceDesignPicker(i) {
-  if (!state.pieces[i]) return;
-  state.activePieceIndex = i;
-  const label = document.getElementById('pieceDesignModalLabel');
-  if (label) label.textContent = `للقطعة رقم ${i + 1} — مقاس ${state.pieces[i].size}`;
-  const grid = document.getElementById('pieceDesignPickerGrid');
-  if (grid) {
-    grid.querySelectorAll('.design-pick-card').forEach(c => c.classList.remove('active'));
-    const current = state.pieces[i].design;
-    if (current) {
-      const match = [...grid.querySelectorAll('.design-pick-card')].find(c => c.dataset.design === current);
-      if (match) match.classList.add('active');
-    }
-  }
-  document.getElementById('pieceDesignModal').classList.add('show');
-}
-
-// بيسجل التصميم المختار على القطعة اللي فاتحينها بس، مش على الطلب كله
-function selectPieceDesign(card) {
-  const i = state.activePieceIndex;
-  if (i === null || i === undefined || !state.pieces[i]) return;
-  const value = card.dataset.design;
-  const idx = card.dataset.index;
-  const piece = state.pieces[i];
-  piece.design = value;
-  if (value === 'custom') {
-    piece.designTitle = '🎯 تصميم مخصص';
-    piece.designImg = CUSTOM_DESIGN_THUMB;
-    piece.designIndex = null;
-  } else if (value === 'more') {
-    piece.designTitle = '🖼️ عايز يشوف تصاميم تانية';
-    piece.designImg = MORE_DESIGN_THUMB;
-    piece.designIndex = null;
-  } else {
-    const item = galleryItems[parseInt(idx, 10)];
-    piece.designTitle = item.title;
-    piece.designImg = item.img;
-    piece.designIndex = parseInt(idx, 10);
-  }
-  closeModal('pieceDesignModal');
-  renderPiecesList();
-  updateFinalOrderReview();
-  if (value !== 'more') showToast('✅ اتحفظ التصميم', 1600);
-}
-
-// بيشيل التصميم المختار للقطعة ده عشان العميل يختار تصميم تاني من الأول
-function removePieceDesign(i) {
-  if (!state.pieces[i]) return;
-  const piece = state.pieces[i];
-  piece.design = null;
-  piece.designTitle = '';
-  piece.designImg = '';
-  piece.designIndex = null;
-  renderPiecesList();
-  updateFinalOrderReview();
-  showToast('🗑️ اتشال التصميم، اختار تصميم جديد للقطعة دي', 2200);
-}
 
 // بيحوّل عدد القطع لكل مقاس (S:1، M:2...) لقائمة قطع فردية، وبيحافظ على أي تصميم/اسم
 // اتسجل قبل كده لو المقاس نفسه لسه موجود، عشان لو العميل زوّد أو قلّل الكمية ميضيعش اللي دخله
@@ -4818,95 +4167,24 @@ function rebuildPieces() {
     if (bucket && bucket.length) return bucket.shift();
     const prefill = (peopleQueue[size] && peopleQueue[size].length) ? peopleQueue[size].shift() : null;
     return {
-      size, design: '', designTitle: '', designImg: '', designIndex: null, printName: '',
+      size,
       height: prefill ? prefill.height : '', weight: prefill ? prefill.weight : '',
-      addNotebookMedal: false
+      addNotebookMedal: state.notebookMedalOfferChoice === 'yes'
     };
   });
 
   renderPiecesList();
-  applyPendingGalleryPick();
 }
 
 function escapeAttr(str) {
   return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
-// بيرسم كارت لكل قطعة على حدة: مقاسها + زرار اختيار تصميمها + خانة الاسم اللي هيتطبع عليها
+// خطوة "تفاصيل القطع" القديمة (كارت لكل قطعة بطوله ووزنه وعرض النوتة والمدالية) اتشالت من الفورم —
+// الطول والوزن بيتاخدوا تلقائي من خطوة المقاس (state.people)، وعرض النوتة والمدالية بقى تبديل واحد
+// شامل في خطوة "الخامة والعروض" (شوف setNotebookMedalOfferChoice). الدالة دي بقت بس بتزامن شكل الأزرار دي.
 function renderPiecesList() {
-  const list = document.getElementById('piecesList');
-  const note = document.getElementById('noPiecesNote');
-  if (!list) return;
-  if (!state.pieces.length) {
-    list.innerHTML = '';
-    if (note) note.style.display = 'block';
-    return;
-  }
-  if (note) note.style.display = 'none';
-  list.innerHTML = state.pieces.map((p, i) => {
-    const hasDesign = !!p.design;
-    const hasName = !!(p.printName && p.printName.trim());
-    const complete = hasDesign && hasName;
-    const thumb = hasDesign
-      ? `<img class="piece-design-thumb" src="${p.designImg}" alt="${escapeAttr(p.designTitle)}" loading="lazy">`
-      : `<div class="piece-design-thumb">🎨</div>`;
-    return `
-      <div class="piece-card${complete ? ' complete' : ''}" data-piece-index="${i}">
-        <div class="piece-card-head">
-          <div class="piece-card-title">👤 قطعة رقم ${i + 1}</div>
-          <div class="piece-size-badge">${p.size}</div>
-        </div>
-        <div class="piece-design-btn${hasDesign ? ' chosen' : ''}" onclick="openPieceDesignPicker(${i})">
-          ${thumb}
-          <div class="piece-design-text">
-            <div class="lbl">${hasDesign ? '✅ التصميم المختار' : 'مفيش تصميم مختار لسه'}</div>
-            <div class="val">${hasDesign ? escapeAttr(p.designTitle) : '👈 دوس هنا لاختيار التصميم'}</div>
-          </div>
-        </div>
-        ${hasDesign ? `
-        <div class="selected-design-display">
-          <img src="${p.designImg}" alt="${escapeAttr(p.designTitle)}" loading="lazy">
-          <div class="sdd-info">
-            <div class="sdd-tag">✅ تم اختيار التصميم بنجاح</div>
-            <h5>${escapeAttr(p.designTitle)}</h5>
-            <div class="sdd-actions">
-              <button type="button" class="sdd-change-btn" onclick="openPieceDesignPicker(${i})">🔄 عايز تشوف تصميم تاني؟ دوس هنا</button>
-              <button type="button" class="sdd-remove-btn" onclick="removePieceDesign(${i})">🗑️ شيل التصميم ده</button>
-            </div>
-          </div>
-        </div>` : ''}
-        <div class="piece-name-label">🖋️ إيه الاسم اللي حابب تطبعه على البالطو؟</div>
-        <input type="text" class="piece-name-input" id="pieceName-${i}" placeholder="مثال: Dr Fatma Mohamed" value="${escapeAttr(p.printName || '')}" oninput="updatePieceName(${i}, this.value)">
-        <small class="piece-name-hint" style="color: var(--muted); font-size: 12px; display: block; margin-top: 4px;">
-          🔤 لو حابب الاسم يتطبع بخط معين، اكتب هنا عادي وابعتلنا نوع الخط اللي انت عايزه وإحنا هنعملهولك
-        </small>
-        <div class="form-row" style="margin-top: 8px;">
-          <div class="form-group">
-            <input type="number" class="piece-name-input" id="pieceHeight-${i}" placeholder="📏 طول صاحب القطعة دي (سم)" value="${escapeAttr(p.height || '')}" oninput="updatePieceMeasure(${i}, 'height', this.value)">
-          </div>
-          <div class="form-group">
-            <input type="number" class="piece-name-input" id="pieceWeight-${i}" placeholder="⚖️ وزن صاحب القطعة دي (كجم)" value="${escapeAttr(p.weight || '')}" oninput="updatePieceMeasure(${i}, 'weight', this.value)">
-          </div>
-        </div>
-        <label style="display:flex; align-items:center; gap:8px; margin-top:10px; font-size:13px; color:var(--text); cursor:pointer; background:#fff8ec; border:1px dashed #f0c987; border-radius:8px; padding:8px 10px;">
-          <input type="checkbox" ${p.addNotebookMedal ? 'checked' : ''} onchange="updatePieceAddon(${i}, this.checked)">
-          📔🏅 عرض اختياري: البالطو + نوتة + مدالية بنفس التصميم بـ <b>${NOTEBOOK_MEDAL_PRICE} ج بس</b>
-        </label>
-      </div>
-    `;
-  }).join('');
-}
-
-function updatePieceName(i, value) {
-  if (!state.pieces[i]) return;
-  state.pieces[i].printName = value;
-  const card = document.querySelector(`.piece-card[data-piece-index="${i}"]`);
-  if (card) {
-    const complete = !!state.pieces[i].design && !!value.trim();
-    card.classList.toggle('complete', complete);
-    if (complete) card.classList.remove('piece-error');
-  }
-  scheduleSaveDraft();
+  syncNotebookMedalOfferToggle();
 }
 
 // بيسجل طول ووزن صاحب القطعة دي بالظبط (كل قطعة منفصلة عن التانية)
@@ -4922,6 +4200,27 @@ function updatePieceAddon(i, checked) {
   if (!state.pieces[i]) return;
   state.pieces[i].addNotebookMedal = checked;
   updateSummary();
+}
+
+// عرض النوتة والمدالية دلوقتي سؤال إجباري (أيوه/لأ) بيطبق على كل قطع الطلب مرة واحدة
+// (بدل ما يتحدد لكل قطعة لوحدها في خطوة كانت اسمها "تفاصيل القطع" واتشالت)
+function setNotebookMedalOfferChoice(wantsOffer) {
+  state.notebookMedalOfferChoice = wantsOffer ? 'yes' : 'no';
+  state.pieces.forEach(p => { p.addNotebookMedal = wantsOffer; });
+  const box = document.getElementById('notebookMedalOfferBox');
+  if (box) box.style.borderColor = '';
+  clearFieldErrors();
+  scheduleSaveDraft();
+  updateSummary();
+}
+// بيظبط شكل الأزرار (أيوه/لأ) حسب الاختيار المحفوظ —
+// بننده عليها كل ما القطع تتجدد (تغيير مقاس/كمية) عشان الاختيار يفضل متزامن
+function syncNotebookMedalOfferToggle() {
+  const yesEl = document.querySelector('input[name="notebookMedalOfferChoice"][value="yes"]');
+  const noEl = document.querySelector('input[name="notebookMedalOfferChoice"][value="no"]');
+  if (!yesEl || !noEl) return;
+  yesEl.checked = state.notebookMedalOfferChoice === 'yes';
+  noEl.checked = state.notebookMedalOfferChoice === 'no';
 }
 
 // عرض النوتة والمدالية مش إضافة فوق سعر البالطو — هو سعر ثابت شامل البالطو + النوتة + المدالية سوا (330 ج بس)
@@ -5045,20 +4344,26 @@ function getSuggestedSizeFromDatabase(height, weight) {
 
 // جدول الرجال / الأولاد (بالطو رجالي)
 const BOYS_SIZE_TABLE = [
-  { size: 'M',   minWeight: 50, maxWeight: 57,  minHeight: 158, maxHeight: 168 },
-  { size: 'L',   minWeight: 58, maxWeight: 68,  minHeight: 166, maxHeight: 175 },
-  { size: 'XL',  minWeight: 69, maxWeight: 78,  minHeight: 171, maxHeight: 180 },
-  { size: 'XXL', minWeight: 79, maxWeight: 88,  minHeight: 175, maxHeight: 184 },
-  { size: '3XL', minWeight: 89, maxWeight: 100, minHeight: 178, maxHeight: 188 }
+  { size: 'M',   minWeight: 50,  maxWeight: 57,  minHeight: 158, maxHeight: 168 },
+  { size: 'L',   minWeight: 58,  maxWeight: 68,  minHeight: 166, maxHeight: 175 },
+  { size: 'XL',  minWeight: 69,  maxWeight: 78,  minHeight: 171, maxHeight: 180 },
+  { size: 'XXL', minWeight: 79,  maxWeight: 88,  minHeight: 175, maxHeight: 184 },
+  { size: '3XL', minWeight: 89,  maxWeight: 100, minHeight: 178, maxHeight: 188 },
+  // 🆕 مقاسات خاصة (سعرها بيتحدد بعد التواصل مباشرة — مربوطة أصلاً بـ SPECIAL_PRICING_SIZES في الكود)
+  { size: '4XL', minWeight: 101, maxWeight: 115, minHeight: 180, maxHeight: 191 },
+  { size: '5XL', minWeight: 116, maxWeight: 130, minHeight: 182, maxHeight: 194 }
 ];
 
 // جدول النساء / البنات (بالطو حريمي)
 const GIRLS_SIZE_TABLE = [
-  { size: 'M',   minWeight: 50, maxWeight: 55, minHeight: 152, maxHeight: 162 },
-  { size: 'L',   minWeight: 56, maxWeight: 61, minHeight: 156, maxHeight: 165 },
-  { size: 'XL',  minWeight: 62, maxWeight: 68, minHeight: 160, maxHeight: 168 },
-  { size: 'XXL', minWeight: 69, maxWeight: 78, minHeight: 163, maxHeight: 171 },
-  { size: '3XL', minWeight: 79, maxWeight: 90, minHeight: 165, maxHeight: 174 }
+  { size: 'M',   minWeight: 50,  maxWeight: 55,  minHeight: 152, maxHeight: 162 },
+  { size: 'L',   minWeight: 56,  maxWeight: 61,  minHeight: 156, maxHeight: 165 },
+  { size: 'XL',  minWeight: 62,  maxWeight: 68,  minHeight: 160, maxHeight: 168 },
+  { size: 'XXL', minWeight: 69,  maxWeight: 78,  minHeight: 163, maxHeight: 171 },
+  { size: '3XL', minWeight: 79,  maxWeight: 90,  minHeight: 165, maxHeight: 174 },
+  // 🆕 مقاسات خاصة (سعرها بيتحدد بعد التواصل مباشرة — مربوطة أصلاً بـ SPECIAL_PRICING_SIZES في الكود)
+  { size: '4XL', minWeight: 91,  maxWeight: 105, minHeight: 167, maxHeight: 177 },
+  { size: '5XL', minWeight: 106, maxWeight: 120, minHeight: 169, maxHeight: 180 }
 ];
 
 // بيرجع index أقرب صف مناسب في جدول معين حسب قيمة (طول أو وزن)
@@ -5070,14 +4375,34 @@ function findSizeIndexInTable(table, value, minKey, maxKey) {
   return table.length - 1;
 }
 
+// ترتيب المقاسات من الأصغر للأكبر (لحساب التعديل بالطول خطوة واحدة لفوق أو تحت)
+const SIZE_ORDER_STEPS = ['M', 'L', 'XL', 'XXL', '3XL', '4XL', '5XL'];
+
+// بيزوّد/يقلل خطوة واحدة بس، ومبيتعداش حدود M لحد 5XL
+function adjustSizeBySteps(size, delta) {
+  let idx = SIZE_ORDER_STEPS.indexOf(size);
+  if (idx === -1) idx = 0;
+  idx = Math.max(0, Math.min(SIZE_ORDER_STEPS.length - 1, idx + delta));
+  return SIZE_ORDER_STEPS[idx];
+}
+
 // الدالة الأساسية: بتاخد الجنس + الطول + الوزن وترجع المقاس النهائي
-// (لو الطول والوزن وقعوا في مقاسين مختلفين، بناخد الأكبر بينهم عشان الراحة)
+// خطوة 1: المقاس الأساسي = المقاس اللي بيطلع من الوزن (كل وزن ليه صف في الجدول بحدود طول متوقعة له تحديدًا)
+// خطوة 2: تعديل حسب الطول *بالنسبة لوزنه هو تحديدًا* (مش رقم ثابت واحد لكل الحالات):
+//   - لو طوله أكبر من أعلى حد طول متوقع لوزنه ده → قلل مقاس (طويل نسبيًا لوزنه)
+//   - لو طوله أقل من أقل حد طول متوقع لوزنه ده → زوّد مقاس (قصير نسبيًا لوزنه)
 function getSuggestedSizeByGender(gender, height, weight) {
   const table = gender === 'boy' ? BOYS_SIZE_TABLE : GIRLS_SIZE_TABLE;
-  const heightIndex = findSizeIndexInTable(table, height, 'minHeight', 'maxHeight');
   const weightIndex = findSizeIndexInTable(table, weight, 'minWeight', 'maxWeight');
-  const finalIndex = Math.max(heightIndex, weightIndex);
-  return table[finalIndex].size;
+  const weightRow = table[weightIndex];
+  const baseSize = weightRow.size;
+
+  let delta = 0;
+  if (height > weightRow.maxHeight) delta = -1; // طويل بالنسبة لوزنه → قلل مقاس
+  else if (height < weightRow.minHeight) delta = 1; // قصير بالنسبة لوزنه → زوّد مقاس
+
+  if (delta === 0) return baseSize;
+  return adjustSizeBySteps(baseSize, delta);
 }
 
 // ————————————————————————————————————————————————
@@ -5374,15 +4699,7 @@ function setupTabs() {
     t.addEventListener('click', () => attemptSwitchTab(t.dataset.tab));
   });
 }
-function goToDesignGallery(e) {
-  if (e) e.preventDefault();
-  switchTab('product');
-  const target = document.getElementById('piecesGroup');
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-const tabOrder = ['info', 'size', 'product', 'shipping', 'payment'];
+const tabOrder = ['info', 'size', 'shipping', 'payment'];
 function switchTab(name) {
   // تتبع كل خطوة يوصلها العميل في الفورم — يديك في تقارير Google Analytics صورة واضحة
   // فين بالظبط بتحصل نسبة الانسحاب الأكبر (مهم قبل موسم الدخول عشان تصلّح الفورم بدري)
@@ -5435,6 +4752,12 @@ function isThreePartName(name) {
 // مصدر واحد لحساب أخطاء تبويب "بياناتك" — بيرجع مصفوفة أسماء الحقول الناقصة/الغلط
 // (اتعمل عشان نفس منطق الفالديشن كان متكرر حرفيًا في 3 أماكن مختلفة: validateInfoStep،
 // attemptSwitchTab، وsubmitOrder — أي تعديل في الشروط كان لازم يتكرر يدويًا في التلاتة)
+// يتحقق إن العنوان مكتوب بالتفصيل (4 أجزاء على الأقل، يعني تلات مسافات/فواصل على الأقل)
+// مش سطر واحد قصير زي "قويسنا" بس
+function isDetailedAddress(addr) {
+  return addr.trim().split(/[\s\-,،]+/).filter(Boolean).length >= 4;
+}
+
 function getInfoErrors() {
   const name = document.getElementById('fullName').value.trim();
   const phone = document.getElementById('phone').value.trim();
@@ -5442,10 +4765,6 @@ function getInfoErrors() {
   const fac = document.getElementById('faculty').value;
   const gov = document.getElementById('governorate').value;
   const addr = document.getElementById('address').value.trim();
-  const addrCenter = document.getElementById('addrCenter').value.trim();
-  const addrVillage = document.getElementById('addrVillage').value.trim();
-  const addrStreet = document.getElementById('addrStreet').value.trim();
-  const addrLandmark = document.getElementById('addrLandmark').value.trim();
   const phoneValid = PHONE_REGEX.test(phone);
 
   const uniOther = document.getElementById('universityOther').value.trim();
@@ -5461,11 +4780,7 @@ function getInfoErrors() {
   else if (fac === 'أخرى' && !facOther) errors.push('facultyOther');
   if (!gov) errors.push('governorate');
   else if (gov === 'أخرى' && !govOther) errors.push('governorateOther');
-  if (!addrCenter) errors.push('addrCenter');
-  if (!addrVillage) errors.push('addrVillage');
-  if (!addrStreet) errors.push('addrStreet');
-  if (!addrLandmark) errors.push('addrLandmark');
-  if (!addr) errors.push('address');
+  if (!addr || !isDetailedAddress(addr)) errors.push('address');
 
   return { errors, phone, phoneValid };
 }
@@ -5474,6 +4789,7 @@ function getInfoErrors() {
 function getInfoErrorMessage(errors, phone, phoneValid) {
   if (errors.length === 1 && errors[0] === 'fullName') return '⚠️ يرجى إدخال الاسم الثلاثي.';
   if (errors.length === 1 && errors[0] === 'phone' && phone && !phoneValid) return '⚠️ رقم الهاتف غير صحيح — لازم يكون 11 رقم ويبدأ بـ 01';
+  if (errors.length === 1 && errors[0] === 'address') return '⚠️ من فضلك ادخل العنوان بالتفصيل';
   if (errors.length === 1 && errors[0] === 'universityOther') return '⚠️ من فضلك اكتب اسم الجامعة';
   if (errors.length === 1 && errors[0] === 'facultyOther') return '⚠️ من فضلك اكتب اسم الكلية';
   if (errors.length === 1 && errors[0] === 'governorateOther') return '⚠️ من فضلك اكتب اسم المحافظة';
@@ -5502,44 +4818,7 @@ function validateInfoStep() {
   return true;
 }
 
-// تتأكد إن كل قطعة من قطع الطلب ليها تصميم مختار واسم مكتوب — نفس عدد القطع بالظبط، من غير أي نقص أو زيادة
-function validateProductStep() {
-  clearFieldErrors();
-  document.querySelectorAll('.piece-card').forEach(c => c.classList.remove('piece-error'));
-
-  if (!state.pieces.length) {
-    showToast('⚠️ من فضلك ارجع لخطوة "المقاس والعدد" واختار كمية الأول', 3500, true);
-    return false;
-  }
-
-  const missing = [];
-  state.pieces.forEach((p, i) => {
-    const ok = !!p.design && !!(p.printName && p.printName.trim());
-    if (!ok) missing.push(i + 1);
-  });
-
-  if (missing.length) {
-    missing.forEach(num => {
-      const card = document.querySelector(`.piece-card[data-piece-index="${num - 1}"]`);
-      if (card) card.classList.add('piece-error');
-    });
-    showToast(`⚠️ من فضلك اختار التصميم واكتب الاسم لكل قطعة — ناقص بيانات القطعة رقم: ${missing.join('، ')}`, 4500, true);
-    // نودّي العميل لمكان الحقل الناقص بالظبط (زرار التصميم أو خانة الاسم) مش للكارت الكبير كله
-    const firstIdx = missing[0] - 1;
-    const firstPiece = state.pieces[firstIdx];
-    let targetEl = null;
-    if (!firstPiece.design) {
-      targetEl = document.querySelector(`.piece-card[data-piece-index="${firstIdx}"] .piece-design-btn`);
-    } else if (!(firstPiece.printName && firstPiece.printName.trim())) {
-      targetEl = document.getElementById(`pieceName-${firstIdx}`);
-    }
-    if (!targetEl) targetEl = document.querySelector(`.piece-card[data-piece-index="${firstIdx}"]`);
-    if (targetEl) setTimeout(() => targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
-    return false;
-  }
-  return true;
-}
-
+// تتأكد إن فيه قطع فعلًا قبل الانتقال للخطوة اللي بعدها (الاسم بقى اختياري، بنأكده بعدين على الواتساب)
 // تتأكد إن فيه كمية مختارة على الأقل قبل الانتقال لتبويب التصميم
 function validateSizeStep() {
   clearFieldErrors();
@@ -5591,6 +4870,17 @@ function validateSizeStep() {
     showToast('⚠️ من فضلك رشّح مقاس لشخص واحد على الأقل وضيفه للطلب، أو اختار كمية يدويًا من شبكة المقاسات', 3500, true);
     return false;
   }
+
+  if (state.notebookMedalOfferChoice !== 'yes' && state.notebookMedalOfferChoice !== 'no') {
+    const box = document.getElementById('notebookMedalOfferBox');
+    if (box) {
+      box.style.borderColor = '#e53935';
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    showToast('⚠️ من فضلك رد على سؤال عرض النوتة والمدالية (أيوه أو لأ) قبل الاستمرار', 3500, true);
+    return false;
+  }
+
   return true;
 }
 
@@ -5619,7 +4909,7 @@ function validateShippingStep() {
   return true;
 }
 
-const STEP_VALIDATORS = { info: validateInfoStep, product: validateProductStep, size: validateSizeStep, shipping: validateShippingStep };
+const STEP_VALIDATORS = { info: validateInfoStep, size: validateSizeStep, shipping: validateShippingStep };
 
 // بوابة التنقل بين الخطوات: بيسمح بالرجوع دايمًا، وبيمنع التقدّم للخطوة الجاية غير لو الخطوة الحالية متكاملة
 function attemptSwitchTab(target) {
@@ -5717,10 +5007,9 @@ function getSpecialPieces() {
 // مصدر واحد لبيانات عروض الكمية (الحد الأدنى للقطع + السعر + الاسم)، مرتبة من الأصغر للأكبر.
 // أي تغيير في سعر أو اسم عرض يتغيّر هنا بس، بدل ما يتكرر يدويًا في أكتر من دالة.
 const OFFER_TIERS = [
-  { min: 2, price: 290, label: 'عرض الاتنين' },
-  { min: 3, price: 280, label: 'عرض الصحاب' },
-  { min: 5, price: 270, label: 'عرض الخمسة' },
-  { min: 10, price: 250, label: 'عرض الشلة' }
+  { min: 2, price: 320, label: 'عرض الاتنين' },
+  { min: 3, price: 310, label: 'عرض الصحاب' },
+  { min: 10, price: 280, label: 'عرض الشلة' }
 ];
 // بترجع أعلى عرض (تيير) العميل داخل فيه حسب عدد القطع، أو null لو أقل من أصغر عرض
 function getOfferTierForPieces(pieces) {
@@ -5730,7 +5019,7 @@ function getOfferTierForPieces(pieces) {
 }
 function getEffectivePiecePrice(pieces) {
   const tier = getOfferTierForPieces(pieces);
-  return tier ? tier.price : state.piecePrice; // قطعة واحدة بالسعر الأساسي (300)
+  return tier ? tier.price : state.piecePrice; // قطعة واحدة بالسعر الأساسي (330)
 }
 function getSizeExtraTotal() {
   let t = 0;
@@ -5809,7 +5098,9 @@ function updateSummary() {
   if (effectivePrice < state.piecePrice) {
     piecePriceEl.innerHTML = `<span style="text-decoration:line-through; color:var(--muted); font-size:12px; margin-left:4px;">${state.piecePrice} ج</span> ${effectivePrice} ج`;
   } else {
-    piecePriceEl.textContent = effectivePrice + ' ج';
+    // حتى لو مفيش خصم كمية، بنفضل نوري 380 مشطوبة قبل السعر الأساسي 330 —
+    // نفس الشكل في كل الموقع عشان العميل يحس إن السعر عرض حقيقي
+    piecePriceEl.innerHTML = `<span style="text-decoration:line-through; color:var(--muted); font-size:12px; margin-left:4px;">380 ج</span> ${effectivePrice} ج`;
   }
   document.getElementById('sumProducts').textContent = productsTotal + ' ج';
   document.getElementById('sumTotal').textContent = total + ' ج';
@@ -5948,25 +5239,10 @@ function updateOrderModeNote() {
   }
 }
 
-// مربع "راجع طلبك" النهائي قبل زر إرسال الطلب مباشرة — بيعرض التصميم/المقاس/الكمية/نوع الشحن/العرض المطبق/السعر النهائي
+// مربع "راجع طلبك" النهائي قبل زر إرسال الطلب مباشرة — بيعرض المقاس/الكمية/نوع الشحن/العرض المطبق/السعر النهائي
 function updateFinalOrderReview() {
   const box = document.getElementById('finalOrderReview');
   if (!box) return;
-
-  const designEl = document.getElementById('revDesign');
-  if (state.pieces && state.pieces.length > 0) {
-    designEl.innerHTML = '<ul class="final-review-pieces-list">' + state.pieces.map((p, i) => {
-      const label = p.design === 'custom' ? '🎯 تصميم مخصص'
-        : p.design === 'more' ? '🖼️ عايز يشوف تصاميم تانية'
-        : (p.designTitle || '👈 لسه محددتش');
-      const thumb = p.designImg
-        ? `<img class="final-review-thumb" src="${p.designImg}" alt="${escapeAttr(label)}" loading="lazy">`
-        : '<span class="final-review-thumb final-review-thumb-empty">🎨</span>';
-      return `<li>${thumb}<span>قطعة ${i + 1} (${p.size}): ${escapeAttr(label)}</span></li>`;
-    }).join('') + '</ul>';
-  } else {
-    designEl.textContent = '—';
-  }
 
   const sizesList = Object.keys(state.sizes)
     .filter(s => state.sizes[s] > 0)
@@ -6133,7 +5409,7 @@ function showToast(msg, duration = 2500, isError = false) {
   setTimeout(() => t.classList.remove('show'), duration);
 }
 
-const FIELD_ERROR_IDS = ['fullName', 'phone', 'university', 'universityOther', 'faculty', 'facultyOther', 'governorate', 'governorateOther', 'addrCenter', 'addrVillage', 'addrStreet', 'addrLandmark', 'address'];
+const FIELD_ERROR_IDS = ['fullName', 'phone', 'university', 'universityOther', 'faculty', 'facultyOther', 'governorate', 'governorateOther', 'address'];
 function clearFieldErrors() {
   FIELD_ERROR_IDS.forEach(id => {
     const field = document.getElementById(id);
@@ -6161,78 +5437,6 @@ function markFieldErrors(ids) {
   if (first) setTimeout(() => first.scrollIntoView({ behavior: 'smooth', block: 'center' }), 350);
 }
 
-let modalGalleryIndices = [];
-let modalGalleryPos = 0;
-
-function getVisibleGalleryIndices() {
-  return galleryItems
-    .map((item, i) => ({ item, i }))
-    .filter(({ item }) => currentFilter === 'all' || (item.cat || 'classic') === currentFilter)
-    .map(({ i }) => i);
-}
-
-function openImageModal(i) {
-  modalGalleryIndices = getVisibleGalleryIndices();
-  let pos = modalGalleryIndices.indexOf(i);
-  if (pos === -1) { modalGalleryIndices = [i]; pos = 0; }
-  modalGalleryPos = pos;
-  renderModalImage();
-  document.getElementById('imgModal').classList.add('show');
-}
-
-function renderModalImage() {
-  const i = modalGalleryIndices[modalGalleryPos];
-  const item = galleryItems[i];
-  const modalImgEl = document.getElementById('modalImg');
-  modalImgEl.src = item.img;
-  modalImgEl.alt = item.title;
-  document.getElementById('modalTitle').textContent = item.title;
-  document.getElementById('modalDesc').textContent = item.desc + ' — تقدر تحمّل الصورة أو تبعتها لنا على الواتساب عشان نعملك شبهها.';
-  document.getElementById('modalDownload').onclick = () => downloadImage(i);
-  document.getElementById('modalWa').onclick = () => sendImageWA(i);
-  const multi = modalGalleryIndices.length > 1;
-  const counter = document.getElementById('modalCounter');
-  if (counter) counter.textContent = multi ? `${modalGalleryPos + 1} / ${modalGalleryIndices.length}` : '';
-  const prevBtn = document.getElementById('modalPrevBtn');
-  const nextBtn = document.getElementById('modalNextBtn');
-  if (prevBtn) prevBtn.style.display = multi ? 'flex' : 'none';
-  if (nextBtn) nextBtn.style.display = multi ? 'flex' : 'none';
-}
-
-function modalGalleryStep(dir) {
-  if (!modalGalleryIndices.length) return;
-  modalGalleryPos = (modalGalleryPos + dir + modalGalleryIndices.length) % modalGalleryIndices.length;
-  renderModalImage();
-}
-
-document.addEventListener('keydown', (e) => {
-  const imgModal = document.getElementById('imgModal');
-  if (!imgModal.classList.contains('show')) return;
-  if (e.key === 'Escape') closeModal('imgModal');
-  if (e.key === 'ArrowLeft') modalGalleryStep(-1);
-  if (e.key === 'ArrowRight') modalGalleryStep(1);
-});
-
-(function setupModalSwipe() {
-  const wrap = document.getElementById('modalImgWrap');
-  if (!wrap) return;
-  let startX = 0, startY = 0, dragging = false;
-  const threshold = 40;
-  wrap.addEventListener('pointerdown', (e) => {
-    startX = e.clientX; startY = e.clientY; dragging = true;
-  });
-  wrap.addEventListener('pointerup', (e) => {
-    if (!dragging) return;
-    dragging = false;
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
-    if (Math.abs(dx) > threshold && Math.abs(dx) > Math.abs(dy)) {
-      modalGalleryStep(dx < 0 ? 1 : -1);
-    }
-  });
-  wrap.addEventListener('pointercancel', () => { dragging = false; });
-  wrap.addEventListener('pointerleave', () => { dragging = false; });
-})();
 
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
@@ -6255,27 +5459,8 @@ function fallbackCopy(text, cb) {
   try { document.execCommand('copy'); cb && cb(); } catch (e) {}
   document.body.removeChild(ta);
 }
-document.getElementById('imgModal')?.addEventListener('click', e => { if (e.target.id === 'imgModal') closeModal('imgModal'); });
-document.getElementById('designZoomModal')?.addEventListener('click', e => { if (e.target.id === 'designZoomModal') closeModal('designZoomModal'); });
 document.getElementById('sizeGuideModal')?.addEventListener('click', e => { if (e.target.id === 'sizeGuideModal') closeModal('sizeGuideModal'); });
 
-function downloadImage(i) {
-  const item = galleryItems[i];
-  const a = document.createElement('a');
-  a.href = item.img;
-  a.download = `${item.title}.jpg`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  showToast('⬇️ بدأ التحميل');
-}
-function sendImageWA(i) {
-  const item = galleryItems[i];
-  window.open(buildWaLink(WHATSAPP_NUMBER, `مرحباً، عايز اطلب بالطو بتصميم "${item.title}" — ${item.desc}.`), '_blank');
-}
-function sendCustomImage() {
-  window.open(buildWaLink(WHATSAPP_NUMBER, 'مرحباً، عندي صورة تصميم خاص وعايز بالطو شبهها. هبعت الصورة بعد الرسالة.'), '_blank');
-}
 
 // لو نسخة جوجل شيت الاحتياطية فشلت، بنسجلها هنا في التخزين المحلي بدل ما تختفي بلا أثر.
 // ده مش بديل عن مراجعة يدوية، لكن على الأقل بيسيب سجل يقدر أي حد يفتح الـ console ويشوفه
@@ -6311,7 +5496,7 @@ async function submitOrder() {
   const gov = document.getElementById('governorate').value;
   const year = document.getElementById('year').value || 'غير محدد';
   const addr = document.getElementById('address').value.trim();
-  const designDesc = document.getElementById('designDesc').value.trim();
+  const designDesc = '';
 
   clearFieldErrors();
   // بنستخدم نفس دالة الفالديشن المستخدمة في validateInfoStep وattemptSwitchTab
@@ -6388,19 +5573,6 @@ async function submitOrder() {
   }
 
   if (getTotalPieces() === 0) { switchTab('size'); showToast('⚠️ من فضلك اختار كمية على الأقل', 3000, true); return; }
-  const missingPieces = [];
-  state.pieces.forEach((p, i) => {
-    if (!p.design || !(p.printName && p.printName.trim())) missingPieces.push(i + 1);
-  });
-  if (missingPieces.length) {
-    switchTab('product');
-    missingPieces.forEach(num => {
-      const card = document.querySelector(`.piece-card[data-piece-index="${num - 1}"]`);
-      if (card) card.classList.add('piece-error');
-    });
-    showToast(`⚠️ من فضلك اختار التصميم واكتب الاسم لكل قطعة — ناقص بيانات القطعة رقم: ${missingPieces.join('، ')}`, 4500, true);
-    return;
-  }
 
   const submitBtn = document.getElementById('submitBtn');
   if (submitBtn.disabled) return;
@@ -6437,16 +5609,15 @@ async function submitOrder() {
   const shipType = (state.shipping === 'fast' ? '⚡ سريع (يوم ليومين)' : '📦 اقتصادي (3 لـ 7 أيام)') + ` - ${shipLocText}`;
   const materialLabel = '🧵 جابردين';
 
-  // ملخص كل قطعة على حدة: المقاس + التصميم + الاسم المطبوع + طول ووزن صاحبها —
-  // عشان كل قطعة تبقى واضحة لوحدها حتى لو كل قطعة لشخص مختلف بمقاس واسم وتصميم مختلف
-  const pieceLabel = (p) => p.design === 'custom' ? '🎯 تصميم مخصص' : p.design === 'more' ? '🖼️ عايز يشوف تصاميم تانية' : p.designTitle;
+  // ملخص كل قطعة على حدة: المقاس + طول ووزن صاحبها —
+  // عشان كل قطعة تبقى واضحة لوحدها حتى لو كل قطعة لشخص مختلف بمقاس مختلف
   const pieceDetails = state.pieces.map((p, i) => ({
-    number: i + 1, size: p.size, design: pieceLabel(p), printName: p.printName.trim(),
+    number: i + 1, size: p.size,
     height: (p.height || '').toString().trim(), weight: (p.weight || '').toString().trim(),
     addNotebookMedal: !!p.addNotebookMedal
   }));
   const piecesBreakdown = pieceDetails
-    .map(p => `  ${p.number}. مقاس ${p.size} — التصميم: ${p.design} — الاسم المطبوع: ${p.printName}${(p.height || p.weight) ? ` — الطول: ${p.height || '-'} سم — الوزن: ${p.weight || '-'} كجم` : ''}${p.addNotebookMedal ? ` — 📔🏅 + نوتة ومدالية بنفس التصميم` : ''}`)
+    .map(p => `  ${p.number}. مقاس ${p.size}${(p.height || p.weight) ? ` — الطول: ${p.height || '-'} سم — الوزن: ${p.weight || '-'} كجم` : ''}${p.addNotebookMedal ? ` — 📔🏅 + نوتة ومدالية` : ''}`)
     .join('\n');
 
   const peopleDetailsText = getPeopleDetailsText();
@@ -6547,9 +5718,11 @@ ${(() => { try { const u = JSON.parse(sessionStorage.getItem('zq_utm')||'{}'); r
 
   // بنستخدم التاب اللي فتحناه بدري (قبل الـ await) عشان المتصفح مايمنعوش كـ Popup،
   // ولو لأي سبب اتقفل أو المتصفح منعه، بنعمل fallback بضغطة رابط <a> حقيقية
+  let waOpenedAutomatically = true;
   if (waWindow && !waWindow.closed) {
     waWindow.location.href = waLink;
   } else {
+    waOpenedAutomatically = false;
     const waAnchor = document.createElement('a');
     waAnchor.href = waLink;
     waAnchor.target = '_blank';
@@ -6561,11 +5734,31 @@ ${(() => { try { const u = JSON.parse(sessionStorage.getItem('zq_utm')||'{}'); r
 
   clearSavedDraft();
   zbqOrderSubmitted = true;
+  // 🔗 لينك احتياطي مضمون: بعض المتصفحات (خصوصًا المتصفح الداخلي بتاع فيسبوك/إنستجرام) بتمنع فتح تابات جديدة،
+  // فمهما حصل بنسيب لينك واضح يقدر العميل يدوس عليه بنفسه يدوي لو الفتح التلقائي متمش
+  const waLinkFallbackEl = document.getElementById('orderConfirmWaLink');
+  if (waLinkFallbackEl) waLinkFallbackEl.href = waLink;
+
   if (orderId) {
     document.getElementById('orderConfirmId').textContent = orderId;
     document.getElementById('orderConfirmModal').classList.add('show');
   } else {
-    showToast('✅ تم استلام طلبك بنجاح.\n\nسيتم التواصل معك في أقرب وقت لتأكيد الطلب ومراجعة البيانات قبل بدء التنفيذ.', 6000);
+    showToast(
+      waOpenedAutomatically
+        ? '✅ تم استلام طلبك بنجاح.\n\nسيتم التواصل معك في أقرب وقت لتأكيد الطلب ومراجعة البيانات قبل بدء التنفيذ.'
+        : '⚠️ تم استلام طلبك، بس الواتساب مفتحش لوحده. دوس على "فتح واتساب" اللي هيظهرلك دلوقتي.',
+      waOpenedAutomatically ? 6000 : 7000
+    );
+    if (!waOpenedAutomatically) {
+      const manualWaBtn = document.createElement('a');
+      manualWaBtn.href = waLink;
+      manualWaBtn.target = '_blank';
+      manualWaBtn.rel = 'noopener';
+      manualWaBtn.textContent = '📲 فتح واتساب';
+      manualWaBtn.style.cssText = 'position:fixed; bottom:90px; left:50%; transform:translateX(-50%); z-index:400; background:#25D366; color:#fff; padding:12px 22px; border-radius:24px; font-weight:800; text-decoration:none; box-shadow:0 8px 22px rgba(0,0,0,0.25);';
+      document.body.appendChild(manualWaBtn);
+      setTimeout(() => manualWaBtn.remove(), 20000);
+    }
   }
   submitBtn.disabled = false;
   submitBtn.innerHTML = submitBtnOriginalHTML;
@@ -6577,49 +5770,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
   });
 });
-
-// ================== تجميع حقول العنوان المنفصلة (المركز/الحي/الشارع/العلامة) في حقل address المخفي ==================
-// ده مضاف بس عشان يوصّل قيمة الحقول الجديدة لنفس حقل address اللي بيستخدمه باقي الكود
-// (التحقق من الإرسال، تجهيز رسالة الواتساب، الإرسال للشيت) من غير ما نلمس أي وظيفة موجودة.
-(function () {
-  var centerEl = document.getElementById('addrCenter');
-  var villageEl = document.getElementById('addrVillage');
-  var streetEl = document.getElementById('addrStreet');
-  var landmarkEl = document.getElementById('addrLandmark');
-  var hiddenAddr = document.getElementById('address');
-  if (!hiddenAddr) return;
-
-  function buildAddress() {
-    var parts = [centerEl, villageEl, streetEl, landmarkEl]
-      .map(function (el) { return el ? el.value.trim() : ''; })
-      .filter(Boolean);
-    hiddenAddr.value = parts.join(' - ');
-    hiddenAddr.dispatchEvent(new Event('input'));
-  }
-
-  [centerEl, villageEl, streetEl, landmarkEl].forEach(function (el) {
-    if (el) el.addEventListener('input', buildAddress);
-  });
-
-  // لو حقل address (المخفي) اتعلّم كخطأ عند الإرسال، نورّي الفرعي الناقص فعليًا بدل ما اليوزر يتوه
-  var addressErrMsg = document.getElementById('err-address');
-  if (addressErrMsg && window.MutationObserver) {
-    var subFields = [centerEl, villageEl, streetEl, landmarkEl].filter(Boolean);
-    var observer = new MutationObserver(function () {
-      var isShown = addressErrMsg.classList.contains('show');
-      subFields.forEach(function (el) {
-        if (isShown && !el.value.trim()) {
-          el.classList.add('field-error');
-          el.addEventListener('input', function clearOnEdit() {
-            el.classList.remove('field-error');
-            el.removeEventListener('input', clearOnEdit);
-          }, { once: true });
-        }
-      });
-    });
-    observer.observe(addressErrMsg, { attributes: true, attributeFilter: ['class'] });
-  }
-})();
 
 // ================== تحقق فوري (Real-time) من الاسم ورقم الهاتف قبل الإرسال ==================
 // بيظهر تنبيه الحقل فورًا لو البيانات غير صحيحة، من غير ما ننتظر ضغطة إرسال الطلب.
@@ -6836,7 +5986,7 @@ if ('serviceWorker' in navigator) {
   var ZBQ_RULES = [
     {
       id: 'price', keywords: ['سعر', 'اسعار', 'بكام', 'ثمن', 'تكلفه القطعه', 'كام', 'قد ايه', 'قديه', 'يبدا من', 'بكم', 'التمن'],
-      answer: 'سعره 300 ج بس 🔥\nوبينزل لحد 250 ج للقطعة لو طلبت مع صحابك 💪\n\nتحب تشوف صور التصاميم؟',
+      answer: 'سعره 330 ج بس 🔥\nوبينزل لحد 280 ج للقطعة لو طلبت مع صحابك 💪\n\nتحب تشوف صور التصاميم؟',
       related: ['أيوه ورّيني صور', 'فيه عروض كمية؟', 'عايز أطلب دلوقتي']
     },
     {
@@ -6846,7 +5996,7 @@ if ('serviceWorker' in navigator) {
     },
     {
       id: 'offers', keywords: ['عرض', 'عروض', 'كميه', 'خصم', 'اطلب مع صحابي', 'شله', 'شلتنا', 'اصحابي', 'زمايلي', 'دفعتي', 'جروب'],
-      answer: '🎁 كل ما العدد يزيد السعر ينزل:\n• 2 بالطو: 290 ج\n• 3 بالطو: 280 ج\n• 10+ بالطو: 250 ج\n\nهتطلب لوحدك ولا مع شلة؟',
+      answer: '🎁 كل ما العدد يزيد السعر ينزل:\n• 2 بالطو: 320 ج\n• 3 بالطو: 310 ج\n• 10+ بالطو: 280 ج\n\nهتطلب لوحدك ولا مع شلة؟',
       related: ['لوحدي', 'مع شلة', 'عايز أطلب دلوقتي']
     },
     {
@@ -6871,7 +6021,7 @@ if ('serviceWorker' in navigator) {
     },
     {
       id: 'social', keywords: ['فيسبوك', 'صفحتكم', 'صفحه', 'انستجرام', 'سوشيال'],
-      answer: 'تابعنا على فيسبوك عشان تشوف أحدث التصاميم:\n<a href="' + FB_LINK + '" target="_blank">صفحة ZibaQ</a>\n\nتحب أوريك تصاميم دلوقتي في المعرض؟',
+      answer: 'تابعنا على فيسبوك عشان تشوف أحدث التصاميم:\n<a href="' + FB_LINK + '" target="_blank">صفحة ZibaQ</a>\n\nتحب أوريك تصاميم دلوقتي على الواتساب؟',
       related: ['أيوه ورّيني صور']
     },
     {
@@ -6905,7 +6055,7 @@ if ('serviceWorker' in navigator) {
     },
     {
       id: 'addons', keywords: ['نوته', 'مداليه', 'هديه', 'عميل قديم', 'خصم عميل قديم'],
-      answer: '📔🏅 فيه عرض: بالطو + نوتة + مدالية بـ 350 ج شامل\nولو عميل قديم عندنا هتاخد هدية مدالية مجانًا\n\nحابب تضيفه على طلبك؟',
+      answer: '📔🏅 فيه عرض: بالطو + نوتة + مدالية بـ 380 ج شامل\nولو عميل قديم عندنا هتاخد هدية مدالية مجانًا\n\nحابب تضيفه على طلبك؟',
       related: ['عايز أطلب دلوقتي']
     },
     {
@@ -6935,12 +6085,12 @@ if ('serviceWorker' in navigator) {
     },
     {
       id: 'authenticity', keywords: ['اصلي', 'حقيقي', 'صور حقيقيه', 'زي الصور', 'نفس الصور'],
-      answer: 'أيوه طبعًا 💯 الصور من طلبات عملاء حقيقيين مش تصميم\\n\\nحابب تشوف المعرض بنفسك؟',
+      answer: 'أيوه طبعًا 💯 الصور من طلبات عملاء حقيقيين مش تصميم\\n\\nحابب تشوف صور حقيقية بنفسك؟',
       related: ['أيوه ورّيني صور', 'عايز أطلب دلوقتي']
     },
     {
       id: 'group', keywords: ['مع شله'],
-      answer: '🔥 يبقى عرض الشلة هيناسبك جدًا\n10 بالطو أو أكتر بـ 250 ج للقطعة\n\nكام واحد تقريبًا هتطلبوا؟',
+      answer: '🔥 يبقى عرض الشلة هيناسبك جدًا\n10 بالطو أو أكتر بـ 280 ج للقطعة\n\nكام واحد تقريبًا هتطلبوا؟',
       related: ['عايز أطلب دلوقتي']
     }
   ];
@@ -6949,7 +6099,7 @@ if ('serviceWorker' in navigator) {
   var THANKS_WORDS = ['شكرا', 'متشكر', 'تسلم', 'مشكور', 'ربنا يخليك', 'تمام كده', 'حلو'];
   var BUY_WORDS = ['عايز اطلب', 'اطلب', 'هطلب', 'عايز أطلب دلوقتي', 'اطلبهولك', 'محتاج بالطو', 'عايز بالطو', 'عاوز اطلب', 'هحجز', 'عايز احجز', 'اطلبه', 'عايز اشتري', 'عاوز اشتري', 'هشتري'];
   var HESITATE_WORDS = ['هفكر', 'مش متاكد', 'لسه هشوف', 'مش لسه', 'هرد بعدين', 'مش عارف', 'هستناكم شويه'];
-  var PHOTO_WORDS = ['ورّيني صور', 'وريني صور', 'اشوف صور', 'صور', 'تصميم', 'تصاميم', 'تصميمات', 'التصاميم', 'اشوف التصاميم', 'اشوف تصاميم', 'شوف تصاميم', 'شوف التصاميم', 'المعرض', 'اشوف المعرض', 'وريني المعرض', 'ورّيني المعرض'];
+  var PHOTO_WORDS = ['ورّيني صور', 'وريني صور', 'اشوف صور', 'صور', 'تصميم', 'تصاميم', 'تصميمات', 'التصاميم', 'اشوف التصاميم', 'اشوف تصاميم', 'شوف تصاميم', 'شوف التصاميم'];
 
   var QUICK_REPLIES_DEFAULT = ['السعر كام؟', 'عايز أطلب دلوقتي', 'فيه عروض كمية؟', 'الشحن بيوصل امتي؟', 'إيه ضمان الاستبدال؟'];
 
@@ -7035,7 +6185,7 @@ if ('serviceWorker' in navigator) {
 
   function goToGallery() {
     if (typeof gtag === 'function') gtag('event', 'chatbot_gallery_click', { lead_temperature: leadTemperature() });
-    if (typeof window.switchView === 'function') window.switchView('gallery');
+    window.open(buildWaLink(WHATSAPP_NUMBER, 'مرحباً، حابب أشوف صور تصاميم قبل ما أطلب.'), '_blank');
     zbqToggleChat(false);
   }
 
@@ -7071,7 +6221,7 @@ if ('serviceWorker' in navigator) {
     }
     if (containsAny(normalized, PHOTO_WORDS)) {
       return {
-        answer: 'اتفضل شوف المعرض بالكامل هنا 👇\nوقولي أي تصميم عجبك وهنظبطهولك.',
+        answer: 'اتفضل هبعتلك صور تصاميم على الواتساب 👇\nوقولي أي تصميم عجبك وهنظبطهولك.',
         related: ['عايز أطلب دلوقتي'],
         action: goToGallery
       };
@@ -7115,7 +6265,7 @@ if ('serviceWorker' in navigator) {
 
     if (best && best.id === 'price' && lead.college) {
       best = Object.assign({}, best, {
-        answer: 'بما إنك في ' + lead.college + ' 👨‍⚕️\nسعره 300 ج بس، وبينزل لـ 250 ج لو طلبت مع صحابك 💪\n\nتحب أطلبهولك دلوقتي؟'
+        answer: 'بما إنك في ' + lead.college + ' 👨‍⚕️\nسعره 330 ج بس، وبينزل لـ 280 ج لو طلبت مع صحابك 💪\n\nتحب أطلبهولك دلوقتي؟'
       });
     }
 
@@ -7282,30 +6432,13 @@ if ('serviceWorker' in navigator) {
 
 /* ===== script block 13 ===== */
 
-// اختبار A/B على صياغة السعر: نصف الزوار بيشوفوا "300 ج"، والنص التاني "يبدأ من 300 ج".
-// كل زائر بياخد نسخة واحدة ثابتة (متخزنة في المتصفح بتاعه) عشان يشوف نفس الصياغة كل مرة يرجع فيها،
-// وبنبعت اسم النسخة مع كل حدث فتح صفحة وكل طلب مكتمل عشان تقارن نسبة التحويل بينهم في Google Analytics.
+// كان فيه A/B test بين صياغتين، دلوقتي بقى شكل واحد ثابت لكل الزوار:
+// "380 ج" مشطوبة جنب "330 ج" الحقيقي، عشان يبان إن ده عرض/خصم حقيقي
 (function () {
-  var KEY = 'zbq_ab_price_variant';
-  var variant;
-  try {
-    variant = localStorage.getItem(KEY);
-    if (!variant) {
-      variant = Math.random() < 0.5 ? 'fixed_price' : 'starting_from';
-      localStorage.setItem(KEY, variant);
-    }
-  } catch (e) {
-    variant = 'fixed_price';
-  }
-
   var el = document.getElementById('zbqPriceAbText');
   if (el) {
-    el.innerHTML = variant === 'starting_from'
-      ? 'الأسعار تبدأ من <b style="color:var(--accent-dark);">300 ج</b>، وتقل لحد 250 ج للقطعة كل ما طلبت مع صحابك أكتر.'
-      : 'القطعة بـ 300 ج، وتقل لحد <b style="color:var(--accent-dark);">250 ج للقطعة</b> كل ما طلبت مع صحابك أكتر.';
+    el.innerHTML = 'القطعة بـ <span style="text-decoration:line-through; color:var(--muted); font-size:13px;">380 ج</span> <b style="color:var(--accent-dark);">330 ج</b>، وتقل لحد <b style="color:var(--accent-dark);">280 ج للقطعة</b> كل ما طلبت مع صحابك أكتر.';
   }
-
-  if (typeof gtag === 'function') gtag('event', 'ab_price_variant_view', { variant: variant });
 })();
 
 /* ===== script block 14 ===== */
